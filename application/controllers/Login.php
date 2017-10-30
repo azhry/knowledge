@@ -24,7 +24,7 @@ class Login extends MY_Controller
 
 			exit;
 		}
-		$this->load->model('User_m');
+		//$this->load->model('User_m');
 	}
 
 	public function index()
