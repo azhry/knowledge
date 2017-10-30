@@ -38,15 +38,15 @@
                                                 <th>Mg</th>
                                                 <th>KTK</th>
                                                 <th>Al-dd</th>
-                                                <!-- <th colspan="3">% Fraksi Tekstur</th> -->
+                                                <th colspan="3">% Fraksi Tekstur</th>
                                                 <th rowspan="2"></th>
                                             </tr>
                                             <tr>
                                                 <th colspan="2">g/Kg</th>
                                                 <th colspan="6">g/Kg</th>
-                                                <!-- <th>Pasir</th>
+                                                <th>Pasir</th>
                                                 <th>Debu</th>
-                                                <th>Liat</th> -->
+                                                <th>Liat</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
