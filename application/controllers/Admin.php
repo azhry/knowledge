@@ -10,7 +10,6 @@ class Admin extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->model('Pemohon_m');
     }
 
     public function index()
