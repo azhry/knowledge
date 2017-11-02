@@ -33,10 +33,24 @@ class Admin extends MY_Controller
         $this->template($this->data);
     }
 
-    public function input_judul()
+    public function pengetahuan_tacit()
     {
-        $this->data['title']        = 'Input Judul';
-        $this->data['content']      = 'admin/input_judul';
+        $this->load->model('pengetahuan_tacit_m');
+        if ($this->POST('submit'))
+        {
+            $this->data['tacit'] = [
+                'judul'         => $this->POST('judul'),
+                'deskripsi'     => $this->POST('deskripsi')
+            ];
+
+            $this->pengetahuan_tacit_m->insert($this->data['tacit']);
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan tacit berhasil disimpan');
+            redirect('admin/pengetahuan-tacit');
+            exit;
+        }
+
+        $this->data['title']        = 'Pengetahuan Tacit';
+        $this->data['content']      = 'admin/pengetahuan_tacit';
         $this->template($this->data);
     }
 }
