@@ -53,4 +53,11 @@ class Admin extends MY_Controller
         $this->data['content']      = 'admin/pengetahuan_tacit';
         $this->template($this->data);
     }
+
+    public function daftar_pengetahuan_tacit()
+    {
+        $this->data['title']        = 'Daftar Pengetahuan Tacit';
+        $this->data['content']      = 'admin/daftar_pengetahuan_tacit';
+        $this->template($this->data);
+    }
 }
