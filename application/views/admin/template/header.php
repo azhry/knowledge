@@ -30,6 +30,13 @@
     <!-- Bootstrap Datepicker CSS -->
     <link href="<?= base_url('assets/datepicker') ?>/css/bootstrap-datepicker3.min.css" rel="stylesheet">
 
+    
+    <script src="<?= base_url('') ?>assets/vendor/jquery/jquery.min.js"></script>
+    
+    <!-- TinyMCE -->
+    <script src="<?=base_url('assets/vendor/tinymce/jquery.tinymce.min.js')?>"></script>
+    <script src="<?=base_url('assets/vendor/tinymce/tinymce.js')?>"></script>
+
 </head>
 
 <body>
