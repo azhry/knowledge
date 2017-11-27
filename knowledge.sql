@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2017 at 12:19 PM
+-- Generation Time: Nov 27, 2017 at 02:57 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -23,109 +23,145 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hasil_uji_daun`
+-- Table structure for table `explicit`
 --
 
-CREATE TABLE `hasil_uji_daun` (
-  `id_hasil` int(11) NOT NULL,
-  `nama_sampel` varchar(20) NOT NULL,
-  `tahun_tanam` varchar(4) NOT NULL,
-  `jenis_sampel` varchar(10) NOT NULL,
-  `tgl_mulai_analisa` date NOT NULL,
-  `tgl_selesai_analisa` date NOT NULL,
-  `kondisi_sampel` varchar(30) NOT NULL,
-  `kode_lab` varchar(15) NOT NULL,
-  `parameter` varchar(10) NOT NULL,
-  `satuan` varchar(10) NOT NULL,
-  `hasil_analisa` varchar(50) NOT NULL,
-  `metode` varchar(50) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `explicit` (
+  `id_explicit` int(11) NOT NULL,
+  `judul` varchar(200) NOT NULL,
+  `kategori` varchar(50) NOT NULL,
+  `keterangan` text NOT NULL,
+  `dokumen` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `nip` varchar(30) NOT NULL,
+  `waktu` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `explicit`
+--
+
+INSERT INTO `explicit` (`id_explicit`, `judul`, `kategori`, `keterangan`, `dokumen`, `status`, `nip`, `waktu`) VALUES
+(1, 'Judul Explicit 111', 'Kategori Explicit 1213', '<p>Keterangan Explicit 132432</p>', '20171127202205.pdf', 0, '12345', '2017-11-27 20:51:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `komentar`
+--
+
+CREATE TABLE `komentar` (
+  `id_komentar` int(11) NOT NULL,
+  `id_tacit` int(11) NOT NULL,
+  `id_explicit` int(11) NOT NULL,
+  `nip` varchar(30) NOT NULL,
+  `waktu` datetime NOT NULL,
+  `komentar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hasil_uji_tanah`
+-- Table structure for table `tacit`
 --
 
-CREATE TABLE `hasil_uji_tanah` (
-  `id_hasil` int(11) NOT NULL,
-  `nama_sampel` varchar(20) NOT NULL,
-  `tahun_tanam` varchar(4) NOT NULL,
-  `jenis_sampel` varchar(10) NOT NULL,
-  `tgl_mulai_analisa` date NOT NULL,
-  `tgl_selesai_analisa` date NOT NULL,
-  `kondisi_sampel` varchar(30) NOT NULL,
-  `kode_lab` varchar(15) NOT NULL,
-  `parameter` varchar(10) NOT NULL,
-  `satuan` varchar(10) NOT NULL,
-  `hasil_analisa` varchar(50) NOT NULL,
-  `metode` varchar(50) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `tacit` (
+  `id_tacit` int(11) NOT NULL,
+  `nip` varchar(30) NOT NULL,
+  `judul` varchar(225) NOT NULL,
+  `kategori` varchar(30) NOT NULL,
+  `masalah` varchar(200) NOT NULL,
+  `solusi` text NOT NULL,
+  `waktu` datetime NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tacit`
+--
+
+INSERT INTO `tacit` (`id_tacit`, `nip`, `judul`, `kategori`, `masalah`, `solusi`, `waktu`, `status`) VALUES
+(1, '12345', 'Judul 13', 'Kategori Tacit 13', '<p>Masalah Tacit 13</p>', '<p>Solusi Tacit 13</p>', '2017-11-27 18:03:50', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengetahuan_tacit`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `pengetahuan_tacit` (
-  `id_pengetahuan` int(11) NOT NULL,
-  `judul` varchar(150) NOT NULL,
-  `deskripsi` text NOT NULL
+CREATE TABLE `user` (
+  `nip` varchar(30) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `nama` varchar(30) NOT NULL,
+  `jabatan` varchar(100) NOT NULL,
+  `bagian` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `no_hp` varchar(20) NOT NULL,
+  `userfile` varchar(100) NOT NULL,
+  `alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pengetahuan_tacit`
+-- Dumping data for table `user`
 --
 
-INSERT INTO `pengetahuan_tacit` (`id_pengetahuan`, `judul`, `deskripsi`) VALUES
-(1, 'Judul', 'Deskripsi');
+INSERT INTO `user` (`nip`, `password`, `nama`, `jabatan`, `bagian`, `email`, `no_hp`, `userfile`, `alamat`) VALUES
+('09021181419007', '985fabf8f96dc1c4c306341031569937', 'Azhary Arliansyah', 'Admin', 'Keuangan', 'arliansyah_azhary@yahoo.com', '08080808', 'aaabbbccc', 'GG LMPGsdfsd'),
+('09021181520021', '985fabf8f96dc1c4c306341031569937', 'Aaaaaa', 'Kebagan', 'Kepala', 'arliansyah_azhary@yahoo.com', '324234', '', 'asdasdas'),
+('12345', '985fabf8f96dc1c4c306341031569937', 'AABB', 'Staff', 'AABB', 'arliansyah_azhary@yahoo.com', '4353', '', 'AABB');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `hasil_uji_daun`
+-- Indexes for table `explicit`
 --
-ALTER TABLE `hasil_uji_daun`
-  ADD PRIMARY KEY (`id_hasil`);
+ALTER TABLE `explicit`
+  ADD PRIMARY KEY (`id_explicit`),
+  ADD KEY `nip` (`nip`);
 
 --
--- Indexes for table `hasil_uji_tanah`
+-- Indexes for table `komentar`
 --
-ALTER TABLE `hasil_uji_tanah`
-  ADD PRIMARY KEY (`id_hasil`);
+ALTER TABLE `komentar`
+  ADD PRIMARY KEY (`id_komentar`),
+  ADD KEY `id_tacit` (`id_tacit`),
+  ADD KEY `id_explicit` (`id_explicit`),
+  ADD KEY `nip` (`nip`);
 
 --
--- Indexes for table `pengetahuan_tacit`
+-- Indexes for table `tacit`
 --
-ALTER TABLE `pengetahuan_tacit`
-  ADD PRIMARY KEY (`id_pengetahuan`);
+ALTER TABLE `tacit`
+  ADD PRIMARY KEY (`id_tacit`),
+  ADD KEY `nip` (`nip`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`nip`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `hasil_uji_daun`
+-- AUTO_INCREMENT for table `explicit`
 --
-ALTER TABLE `hasil_uji_daun`
-  MODIFY `id_hasil` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `explicit`
+  MODIFY `id_explicit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `hasil_uji_tanah`
+-- AUTO_INCREMENT for table `komentar`
 --
-ALTER TABLE `hasil_uji_tanah`
-  MODIFY `id_hasil` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `komentar`
+  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pengetahuan_tacit`
+-- AUTO_INCREMENT for table `tacit`
 --
-ALTER TABLE `pengetahuan_tacit`
-  MODIFY `id_pengetahuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `tacit`
+  MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

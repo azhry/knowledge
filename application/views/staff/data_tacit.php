@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Data User <a href="<?= base_url('admin/tambah-data-user') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
+                            <h1 class="page-header">Data Pengetahuan Tacit <a href="<?= base_url('admin/tambah_data_tacit') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Daftar User
+                                    Daftar Pengetahuan Tacit 
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -27,9 +27,8 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>NIP</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>Bagian</th>
+                                                <th>Judul</th>
+                                                <th>Kategori</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -38,16 +37,15 @@
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
                                                 <td><?= $row->nip ?></td>
-                                                <td><?= $row->nama ?></td>
-                                                <td><?= $row->jabatan ?></td>
-                                                <td><?= $row->bagian ?></td>
+                                                <td><?= $row->judul ?></td>
+                                                <td><?= $row->kategori ?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                          <li><a href="<?= base_url('admin/edit-data-user/'.$row->nip) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                          <li><a href="<?= base_url('admin/detail-data-user/'.$row->nip) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                          <li><a href="<?= base_url('admin/edit_data_tacit/'.$row->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
+                                                          <li><a href="<?= base_url('admin/detail_data_tacit/'.$row->id_tacit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
                                                           <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>

@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" style="text-align: left;">Detail Data User</h1>
+                            <h1 class="page-header" style="text-align: left;">Detail Komentar</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -16,7 +16,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Detail Data User
+                                    Detail Komentar
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -27,32 +27,24 @@
                                         <tbody>
                                             <tr>
                                                 <th>NIP</th>
-                                                <td><?= $user->nip ?></td>
+                                                <td><?= $komentar->nip ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Nama</th>
-                                                <td><?= $user->nama ?></td>
+                                                <th>ID Tacit</th>
+                                                <td><?= $komentar->id_tacit ?></td>
                                             <tr>
-                                                <th>Jabatan</th>
-                                                <td><?= $user->jabatan ?></td>
+                                                <th>ID Explicit</th>
+                                                <td><?= $komentar->id_komentar ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Bagian</th>
-                                                <td><?= $user->bagian ?></td>
+                                                <th>Waktu</th>
+                                                <td><?= $komentar->waktu ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Email</th>
-                                                <td><?= $user->email ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Nomor HP</th>
-                                                <td><?= $user->no_hp ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Alamat</th>
+                                                <th>Komentar</th>
                                                 <td>
                                                     <p style="text-align: justify;">
-                                                        <?= $user->alamat ?>
+                                                        <?= $komentar->komentar ?>
                                                     </p>
                                                 </td>
                                             </tr>

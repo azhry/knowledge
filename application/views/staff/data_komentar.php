@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Data User <a href="<?= base_url('admin/tambah-data-user') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
+                            <h1 class="page-header">Data Komentar <a href="<?= base_url('admin/tambah_data_komentar') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Daftar User
+                                    Daftar Komentar 
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -26,10 +26,11 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
+                                                <th>ID Tacit</th>
+                                                <th>ID Explicit</th>
                                                 <th>NIP</th>
-                                                <th>Nama</th>
-                                                <th>Jabatan</th>
-                                                <th>Bagian</th>
+                                                <th>Waktu</th>
+                                                <th>Komentar</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -37,17 +38,18 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
+                                                <td><?= $row->id_tacit ?></td>
+                                                <td><?= $row->id_explicit ?></td>
                                                 <td><?= $row->nip ?></td>
-                                                <td><?= $row->nama ?></td>
-                                                <td><?= $row->jabatan ?></td>
-                                                <td><?= $row->bagian ?></td>
+                                                <td><?= $row->waktu ?></td>
+                                                <td style="text-align: left !important;"><?= substr($row->komentar, 0,150).'...' ?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                          <li><a href="<?= base_url('admin/edit-data-user/'.$row->nip) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                          <li><a href="<?= base_url('admin/detail-data-user/'.$row->nip) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                          <li><a href="<?= base_url('admin/edit_data_komentar/'.$row->id_komentar) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
+                                                          <li><a href="<?= base_url('admin/detail_data_komentar/'.$row->id_komentar) ?>"><i class="fa fa-eye"></i> Detail</a></li>
                                                           <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>

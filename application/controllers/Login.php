@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-/**
- *
- */
+
 class Login extends MY_Controller
 {
 
@@ -11,27 +9,37 @@ class Login extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$username = $this->session->userdata('username');
-		if (isset($username))
+		$this->data['nip'] = $this->session->userdata('nip');
+		if (isset($this->data['nip']))
 		{
-			$this->data['id_role'] = $this->session->userdata('id_role');
-			switch ($this->data['id_role'])
+			$this->data['jabatan'] = $this->session->userdata('jabatan');
+			switch ($this->data['jabatan'])
 			{
-				case 1:
+				case 'Admin':
 					redirect('admin');
-					break;
-			}
+					exit;
 
-			exit;
+				case 'Staff':
+					redirect('staff');
+					exit;
+
+				case 'Staff Ahli':
+					redirect('staff-ahli');
+					exit;
+
+				case 'Kebagan':
+					redirect('kebagan');
+					exit;
+			}
 		}
-		//$this->load->model('User_m');
 	}
 
 	public function index()
 	{
-		if ($this->POST('login-submit'))
+		if ($this->POST('login'))
 		{
-			if (!$this->User_m->required_input(['username','password'])) 
+			$this->load->model('login_m');
+			if (!$this->login_m->required_input(['nip','password'])) 
 			{
 				$this->flashmsg('Data harus lengkap','warning');
 				redirect('login');
@@ -39,19 +47,21 @@ class Login extends MY_Controller
 			}
 			
 			$this->data = [
-			'username'	=> $this->POST('username'),
-			'password'	=> md5($this->POST('password'))
+				'nip'	=> $this->POST('nip'),
+				'password'	=> md5($this->POST('password'))
 			];
 
-			$result = $this->User_m->login($this->data);
+			$result = $this->login_m->login($this->data['nip'], $this->data['password']);
 			if (!isset($result)) 
 			{
-				$this->flashmsg('Username atau password salah','danger');
+				$this->flashmsg('NIP atau password salah','danger');
 			}
+			
 			redirect('login');
 			exit;
 		}
-		$this->data['title'] = 'LOGIN'.$this->title;
-		$this->load->view('login',$this->data);
+		
+		$this->data['title'] = 'LOGIN' . $this->title;
+		$this->load->view('login', $this->data);
 	}
 }

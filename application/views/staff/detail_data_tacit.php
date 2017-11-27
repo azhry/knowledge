@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" style="text-align: left;">Detail Data User</h1>
+                            <h1 class="page-header" style="text-align: left;">Detail Data Pengetahuan Tacit</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -16,7 +16,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Detail Data User
+                                    Detail Data Pengetahuan Tacit 
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -26,33 +26,42 @@
                                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <tbody>
                                             <tr>
-                                                <th>NIP</th>
-                                                <td><?= $user->nip ?></td>
+                                                <th>Pengunggah</th>
+                                                <td>
+                                                    <?php 
+                                                        $user = $this->user_m->get_row(['nip' => $tacit->nip]);
+                                                        echo $user ? $user->nama : '-';
+                                                    ?>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th>Nama</th>
-                                                <td><?= $user->nama ?></td>
+                                                <th>Judul</th>
+                                                <td><?= $tacit->judul ?></td>
                                             <tr>
-                                                <th>Jabatan</th>
-                                                <td><?= $user->jabatan ?></td>
+                                                <th>Katgeori</th>
+                                                <td><?= $tacit->kategori ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Bagian</th>
-                                                <td><?= $user->bagian ?></td>
+                                                <th>Waktu</th>
+                                                <td><?= $tacit->waktu ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Email</th>
-                                                <td><?= $user->email ?></td>
+                                                <th>Status</th>
+                                                <td><?= $tacit->status ? 'Valid' : 'Belum Valid' ?></td>
                                             </tr>
                                             <tr>
-                                                <th>Nomor HP</th>
-                                                <td><?= $user->no_hp ?></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Alamat</th>
+                                                <th>Masalah</th>
                                                 <td>
                                                     <p style="text-align: justify;">
-                                                        <?= $user->alamat ?>
+                                                        <?= $tacit->masalah ?>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Solusi</th>
+                                                <td>
+                                                    <p style="text-align: justify;">
+                                                        <?= $tacit->solusi ?>
                                                     </p>
                                                 </td>
                                             </tr>
