@@ -12,31 +12,15 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="lnr lnr-chart-bars"></i></span>
-                                        <p>
-                                            <span class="number"><?= count(2) ?></span>
-                                            <span class="title">Data Daun</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="lnr lnr-book"></i></span>
-                                        <p>
-                                            <span class="number"><?= count(1) ?></span>
-                                            <span class="title">Data Tanah</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="metric">
-                                        <span class="icon"><i class="lnr lnr-pencil"></i></span>
-                                        <p>
-                                            <span class="number"><?= count(3) ?></span>
-                                            <span class="title">Judul</span>
-                                        </p>
-                                    </div>
+                                    <a href="<?= base_url('admin/data-user') ?>">
+                                        <div class="metric">
+                                            <span class="icon"><i class="lnr lnr-user"></i></span>
+                                            <p>
+                                                <span class="number"><?= count($user) ?></span>
+                                                <span class="title">Data User</span>
+                                            </p>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

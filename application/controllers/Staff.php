@@ -26,10 +26,10 @@ class Staff extends MY_Controller
 	{
         $this->load->model('tacit_m');
         $this->load->model('explicit_m');
-        $this->load->model('user_m');
+        $this->load->model('komentar_m');
         $this->data['tacit']        = $this->tacit_m->get();
         $this->data['explicit']     = $this->explicit_m->get();
-        $this->data['staff']        = $this->user_m->get(['jabatan' => 'Staff']);
+        $this->data['komentar']     = $this->komentar_m->get();
 		$this->data['title']        = 'Dashboard Admin';
         $this->data['content']      = 'staff/dashboard';
         $this->template($this->data, 'staff');
@@ -261,6 +261,7 @@ class Staff extends MY_Controller
 
     public function data_komentar()
     {
+        $this->load->model('komentar_m');
         $this->data['data']        = $this->komentar_m->get();
         $this->data['title']        = 'Data Komentar';
         $this->data['content']      = 'admin/data_komentar';
