@@ -20,10 +20,20 @@ class Kebagan extends MY_Controller
             redirect('login');
             exit;
         }
+
+        $this->load->model('user_m');
 	}
 
 	public function index()
 	{
-		echo 'Dashboard kebagan';
+		$this->data['user']         = $this->user_m->get();
+        $this->data['title']        = 'Dashboard Kebagan';
+        $this->data['content']      = 'kebagan/dashboard';
+        $this->template($this->data,'kebagan');
 	}
+
+    public function hasil_pencarian()
+    {
+        $this->load->view('kebagan/hasil_pencarian');
+    }    
 }
