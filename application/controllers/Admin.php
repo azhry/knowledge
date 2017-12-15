@@ -140,7 +140,7 @@ class Admin extends MY_Controller
     {
 
         $this->data['user']         = $this->user_m->get_row(['nip' => $id]);
-        $this->data['title']        = 'Detail Data User';
+        $this->data['title']        = 'Detail Data  User';
         $this->data['content']      = 'admin/detail_data_user';
         $this->template($this->data);
     }
