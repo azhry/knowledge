@@ -20,6 +20,8 @@ class Staff extends MY_Controller
             redirect('login');
             exit;
         }
+
+        $this->load->model('user_m');
 	}
 
 	public function index()
@@ -30,7 +32,7 @@ class Staff extends MY_Controller
         $this->data['tacit']        = $this->tacit_m->get();
         $this->data['explicit']     = $this->explicit_m->get();
         $this->data['komentar']     = $this->komentar_m->get();
-		$this->data['title']        = 'Dashboard Admin';
+		$this->data['title']        = 'Dashboard staff';
         $this->data['content']      = 'staff/dashboard';
         $this->template($this->data, 'staff');
 	}
@@ -264,7 +266,7 @@ class Staff extends MY_Controller
         $this->load->model('komentar_m');
         $this->data['data']        = $this->komentar_m->get();
         $this->data['title']        = 'Data Komentar';
-        $this->data['content']      = 'admin/data_komentar';
+        $this->data['content']      = 'staff/data_komentar';
         $this->template($this->data, 'staff');
     }
 
@@ -284,13 +286,13 @@ class Staff extends MY_Controller
 
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Komentar berhasil disimpan');
 
-            redirect('admin/tambah_data_komentar');
+            redirect('staff/tambah_data_komentar');
             exit;
         }
 
 
         $this->data['title']        = 'Tambah Data Komentar';
-        $this->data['content']      = 'admin/tambah_data_komentar';
+        $this->data['content']      = 'staff/tambah_data_komentar';
         $this->template($this->data, 'staff');
     }
 
@@ -311,11 +313,11 @@ class Staff extends MY_Controller
 
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Komentar berhasil diedit');
 
-            redirect('admin/edit_data_komentar/'.$id_komentar);
+            redirect('staff/edit_data_komentar/'.$id_komentar);
         }
         $this->data['komentar']     = $this->komentar_m->get_row(['id_komentar' => $id]);
         $this->data['title']        = 'Edit Data Komentar';
-        $this->data['content']      = 'admin/edit_data_komentar';
+        $this->data['content']      = 'staff/edit_data_komentar';
         $this->template($this->data, 'staff');
     }
 
@@ -324,7 +326,108 @@ class Staff extends MY_Controller
 
         $this->data['komentar']     = $this->komentar_m->get_row(['id_komentar' => $id]);
         $this->data['title']        = 'Detail Data Komentar';
-        $this->data['content']      = 'admin/detail_data_komentar';
+        $this->data['content']      = 'staff/detail_data_komentar';
         $this->template($this->data, 'staff');
     }
+
+    // user
+    public function data_user()
+    {
+        $this->data['data']        = $this->user_m->get(['jabatan' => 'Staff']);
+        $this->data['title']        = 'Data User';
+        $this->data['content']      = 'staff/data_user';
+        $this->template($this->data,'staff');
+    }
+
+    public function tambah_data_user()
+    {
+        if($this->POST('simpan')){
+
+            $this->data['data_user'] = [
+                'nip'       => $this->POST('nip'),
+                'password'  => md5($this->POST('password')),
+                'nama'      => $this->POST('nama'),
+                'jabatan'   => $this->POST('jabatan'),
+                'bagian'    => $this->POST('bagian'),                
+                'email'     => $this->POST('email'),
+                'no_hp'     => $this->POST('no_hp'),
+                'alamat'    => $this->POST('alamat')
+            ];
+
+            // $this->upload($this->POST('nip'), 'userfile', 'doc');
+
+            $this->user_m->insert($this->data['data_user']);
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil disimpan');
+            redirect('staff/tambah_data_user');
+            exit;
+        }
+
+
+        $this->data['title']        = 'Tambah Data User';
+        $this->data['content']      = 'staff/tambah_data_user';
+        $this->template($this->data,'staff');
+    }
+
+    public function edit_data_user()
+    {   
+        $this->data['nip']  = $this->uri->segment(3);
+        if (!isset($this->data['nip']))
+        {
+            $this->flashmsg('<i class="fa fa-warning"></i> Required parameter is missing', 'danger');
+            redirect('staff/data-user');
+            exit;
+        }
+
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+        if (!isset($this->data['user']))
+        {
+            $this->flashmsg('<i class="fa fa-warning"></i> Data pengguna ' . $this->data['nip'] . ' tidak ditemukan', 'danger');
+            redirect('staff/data-user');
+            exit;
+        }
+
+        if($this->POST('simpan'))
+        {
+            $this->data['data_user'] = [
+                'nip'       => $this->POST('nip'),
+                'nama'      => $this->POST('nama'),
+                'jabatan'   => $this->POST('jabatan'),
+                'bagian'    => $this->POST('bagian'),                
+                'email'     => $this->POST('email'),
+                'no_hp'     => $this->POST('no_hp'),
+                'alamat'    => $this->POST('alamat')
+            ];
+
+            $password = $this->POST('password');
+            if (!empty($password) or strlen($password) > 0)
+            {
+                $this->data['data_user']['password'] = md5($password);
+            }
+
+            $this->user_m->update($this->data['nip'], $this->data['data_user']);
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil diedit');
+            redirect('staff/edit-data-user/' . $this->data['nip']);
+            exit;
+        }
+
+        $this->data['title']        = 'Edit Data User';
+        $this->data['content']      = 'staff/edit_data_user';
+        $this->template($this->data,'staff');
+    }
+
+    public function detail_data_user($id)
+    {
+
+        $this->data['user']         = $this->user_m->get_row(['nip' => $id]);
+        $this->data['title']        = 'Detail Data  User';
+        $this->data['content']      = 'staff/detail_data_user';
+        $this->template($this->data,'staff');
+    }
+
+    public function hasil_pencarian()
+    {
+        $this->data['title']        = 'Hasil Pencarian';
+        $this->data['content']      = 'staff/hasil_pencarian';
+        $this->template($this->data,'staff');
+    } 
 }
