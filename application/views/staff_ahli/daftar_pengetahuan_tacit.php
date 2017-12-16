@@ -41,7 +41,15 @@
                                                 <td><?= $row->kategori ?></td>
                                                 <td><?= $row->nama ?></td>
                                                 <td><?= $row->waktu ?></td>
-                                                <td><?= $row->status ? 'Valid' : 'Belum Valid' ?></td>
+                                                <td>
+                                                    <div id="btn-<?= $row->id_tacit ?>">
+                                                        <?php if ($row->status == 1): ?>
+                                                            <button onclick="changeStatus(<?= $row->id_tacit ?>)" class="btn btn-success"><i class="fa fa-check"></i> Valid</button>
+                                                        <?php else: ?>
+                                                            <button onclick="changeStatus(<?= $row->id_tacit ?>)" class="btn btn-danger"><i class="fa fa-close"></i> Belum Valid</button>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -98,5 +106,21 @@
                         }
                     });
                     return false;
+                }
+
+                function changeStatus(id_tacit) {
+                    $.ajax({
+                        url: '<?= base_url('staff_ahli/daftar-pengetahuan-tacit') ?>',
+                        type: 'POST',
+                        data: {
+                            id_tacit: id_tacit
+                        },
+                        success: function(response) {
+                            $('#btn-' + id_tacit).html(response);
+                        },
+                        error: function (e) {
+                            console.log(e.responseText);
+                        }
+                    });
                 }
             </script>

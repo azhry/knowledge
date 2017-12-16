@@ -49,6 +49,27 @@ class Staff_ahli extends MY_Controller
             exit;
         }
 
+        if ($this->POST('id_tacit'))
+        {
+            $id_tacit   = $this->POST('id_tacit');
+            $data       = $this->tacit_m->get_row(['id_tacit' => $id_tacit]);
+            if (isset($data))
+            {
+                if ($data->status == 1)
+                {
+                    $this->tacit_m->update_where(['id_tacit' => $id_tacit], ['status' => 0]);
+                    echo '<button class="btn btn-danger" onclick="changeStatus('.$id_tacit.')"><i class="fa fa-close"></i> Tidak Valid</button>';
+                }
+                else
+                {
+                    $this->tacit_m->update_where(['id_tacit' => $id_tacit], ['status' => 1]);
+                    echo '<button class="btn btn-success" onclick="changeStatus('.$id_tacit.')"><i class="fa fa-check"></i> Valid</button>';   
+                }
+             } 
+
+            exit;
+        }
+
         $this->data['tacit']        = $this->tacit_m->get_tacit();
         $this->data['title']        = 'Daftar Pengetahuan Tacit';
         $this->data['content']      = 'staff_ahli/daftar_pengetahuan_tacit';
@@ -153,6 +174,27 @@ class Staff_ahli extends MY_Controller
         if ($this->POST('delete') && $this->POST('id_explicit'))
         {
             $this->explicit_m->delete($this->POST('id_explicit'));
+            exit;
+        }
+
+        if ($this->POST('id_explicit'))
+        {
+            $id_explicit   = $this->POST('id_explicit');
+            $data       = $this->explicit_m->get_row(['id_explicit' => $id_explicit]);
+            if (isset($data))
+            {
+                if ($data->status == 1)
+                {
+                    $this->explicit_m->update_where(['id_explicit' => $id_explicit], ['status' => 0]);
+                    echo '<button class="btn btn-danger" onclick="changeStatus('.$id_explicit.')"><i class="fa fa-close"></i> Tidak Valid</button>';
+                }
+                else
+                {
+                    $this->explicit_m->update_where(['id_explicit' => $id_explicit], ['status' => 1]);
+                    echo '<button class="btn btn-success" onclick="changeStatus('.$id_explicit.')"><i class="fa fa-check"></i> Valid</button>';   
+                }
+             } 
+
             exit;
         }
 

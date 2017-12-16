@@ -42,6 +42,12 @@ class Kebagan extends MY_Controller
     // user
     public function data_user()
     {
+        if ($this->POST('nip') && $this->POST('delete'))
+        {
+            $this->user_m->delete($this->POST('nip'));
+            exit;
+        }
+        
         $this->data['data']        = $this->user_m->get(['jabatan' => 'Kebagan']);
         $this->data['title']        = 'Data User';
         $this->data['content']      = 'kebagan/data_user';
