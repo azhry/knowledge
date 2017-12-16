@@ -22,6 +22,7 @@ class Staff extends MY_Controller
         }
 
         $this->load->model('user_m');
+        $this->load->model('komentar_m');
 	}
 
 	public function index()
@@ -29,9 +30,11 @@ class Staff extends MY_Controller
         $this->load->model('tacit_m');
         $this->load->model('explicit_m');
         $this->load->model('komentar_m');
+        $this->load->model('user_m');
         $this->data['tacit']        = $this->tacit_m->get();
         $this->data['explicit']     = $this->explicit_m->get();
         $this->data['komentar']     = $this->komentar_m->get();
+        $this->data['user']         = $this->user_m->get(['jabatan' => 'Staff']);
 		$this->data['title']        = 'Dashboard staff';
         $this->data['content']      = 'staff/dashboard';
         $this->template($this->data, 'staff');
@@ -263,6 +266,12 @@ class Staff extends MY_Controller
 
     public function data_komentar()
     {
+        if ($this->POST('delete') && $this->POST('id_komentar'))
+        {
+            $this->komentar_m->delete($this->POST('id_komentar'));
+            exit;
+        }
+
         $this->load->model('komentar_m');
         $this->data['data']        = $this->komentar_m->get();
         $this->data['title']        = 'Data Komentar';
@@ -333,6 +342,12 @@ class Staff extends MY_Controller
     // user
     public function data_user()
     {
+        if ($this->POST('nip') && $this->POST('delete'))
+        {
+            $this->user_m->delete($this->POST('nip'));
+            exit;
+        }
+
         $this->data['data']        = $this->user_m->get(['jabatan' => 'Staff']);
         $this->data['title']        = 'Data User';
         $this->data['content']      = 'staff/data_user';

@@ -6,39 +6,34 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" style="text-align: left;">Tambah Data Komentar</h1>
+                            <h1 class="page-header" style="text-align: left;">Edit Data Pengetahuan Explicit</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                <?= form_open_multipart('staff/tambah_data_komentar', ['id' => 'form']) ?>
+                <?= form_open_multipart('staff_ahli/edit-data-explicit/' . $explicit->id_explicit, ['id' => 'form']) ?>
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>
+                                <style type="text/css">.required{color: red;}</style>
                                 <?= $this->session->flashdata('msg') ?>
                             </div>
                             <div class="form-group">
-                                <label>NIP</label>
-                                <input type="text" class="form-control" name="nip" required>
+                                <label>Judul</label>
+                                <input type="text" class="form-control" name="judul" value="<?= $explicit->judul  ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>ID Tacit</label>
-                                <input type="text" class="form-control" name="id_tacit" required>
+                                <label>Kategori</label>
+                                <input type="text" class="form-control" name="kategori" value="<?= $explicit->kategori  ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>ID Explicit</label>
-                                <input type="text" class="form-control" name="id_explicit" required>
+                                <label>Dokumen</label>
+                                <input type="file" name="doc" accept="application/pdf">
+                                <small><i>Tidak perlu mengunggah file jika tidak ingin diubah</i></small>
                             </div>
                             <div class="form-group">
-                                <label>Waktu</label>
-                                <div class="input-group date">
-                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" name="waktu" id="waktu" class="form-control" placeholder="YYYY-MM-DD" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Komentar</label>
-                                <textarea id="tinymce" class="form-control" name="komentar" required></textarea>
+                                <label>Keterangan</label>
+                                <textarea id="tinymce" class="form-control" name="keterangan" required><?= $explicit->keterangan  ?></textarea>
                             </div>
 
                             <div>
@@ -76,10 +71,5 @@
                         image_advtab: true
                     })
 
-                    $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
-                    
-                    $('#dataTables-example').DataTable({
-                        responsive: true
-                    })
                 });
             </script>

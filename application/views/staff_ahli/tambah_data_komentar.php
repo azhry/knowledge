@@ -11,7 +11,7 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                <?= form_open_multipart('staff/tambah_data_komentar', ['id' => 'form']) ?>
+                <?= form_open_multipart('staff_ahli/tambah_data_komentar', ['id' => 'form']) ?>
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>

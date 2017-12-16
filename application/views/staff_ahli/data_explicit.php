@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Data Komentar <a href="<?= base_url('staff/tambah_data_komentar') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
+                            <h1 class="page-header">Data Pengetahuan Explicit <a href="<?= base_url('staff_ahli/tambah-data-explicit') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -15,22 +15,23 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Daftar Komentar 
+                                    Daftar Pengetahuan Explicit 
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
                                     <style type="text/css">
                                         tr th, tr td {text-align: center; padding: 1%;}
                                     </style>
+                                    <?= $this->session->flashdata('msg') ?>
                                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>ID Tacit</th>
-                                                <th>ID Explicit</th>
-                                                <th>NIP</th>
+                                                <th>Judul</th>
+                                                <th>Kategori</th>
+                                                <th>Pengunggah</th>
                                                 <th>Waktu</th>
-                                                <th>Komentar</th>
+                                                <th>Status</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -38,19 +39,19 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td><?= $row->id_tacit ?></td>
-                                                <td><?= $row->id_explicit ?></td>
-                                                <td><?= $row->nip ?></td>
+                                                <td><?= $row->judul ?></td>
+                                                <td><?= $row->kategori ?></td>
+                                                <td><?= $row->nama ?></td>
                                                 <td><?= $row->waktu ?></td>
-                                                <td style="text-align: left !important;"><?= substr($row->komentar, 0,150).'...' ?></td>
+                                                <td><?= $row->status ? 'Valid' : 'Belum Valid' ?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                          <li><a href="<?= base_url('staff/edit_data_komentar/'.$row->id_komentar) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                          <li><a href="<?= base_url('staff/detail_data_komentar/'.$row->id_komentar) ?>"><i class="fa fa-eye"></i> Detail</a></li>
-                                                          <li><a href="" onclick="delete_komentar(<?= $row->id_komentar ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                          <li><a href="<?= base_url('staff_ahli/edit-data-explicit/'.$row->id_explicit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
+                                                          <li><a href="<?= base_url('staff_ahli/detail-data-explicit/'.$row->id_explicit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                          <li><a href="" onclick="delete_explicit(<?= $row->id_explicit ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -74,24 +75,22 @@
 
             <script>
                 $(document).ready(function() {
-                    $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
-                    
                     $('#dataTables-example').DataTable({
                         responsive: true
                     });
                 });
 
-                function delete_komentar(id_komentar) {
+                function delete_explicit(id_explicit) {
                     $.ajax({
-                        url: '<?= base_url('staff/data-komentar') ?>',
+                        url: '<?= base_url('staff_ahli/daftar-pengetahuan-explicit') ?>',
                         type: 'POST',
                         data: {
                             delete: true,
-                            id_komentar: id_komentar
+                            id_explicit: id_explicit
                         },
                         success: function(response) {
                             var json = $.parseJSON(response);
-                            window.location = '<?= base_url('staff/data-komentar') ?>';
+                            window.location = '<?= base_url('staff_ahli/daftar-pengetahuan-explicit') ?>';
                         },
                         error: function(e) {
                             console.log(e.responseText);

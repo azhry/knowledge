@@ -6,12 +6,12 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header" style="text-align: left;">Tambah Data Komentar</h1>
+                            <h1 class="page-header" style="text-align: left;">Edit Data Komentar</h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                <?= form_open_multipart('staff/tambah_data_komentar', ['id' => 'form']) ?>
+                <?= form_open('staff_ahli/edit_data_komentar/'.$komentar->id_komentar, ['id' => 'form']) ?>
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>
@@ -19,26 +19,26 @@
                             </div>
                             <div class="form-group">
                                 <label>NIP</label>
-                                <input type="text" class="form-control" name="nip" required>
+                                <input type="text" class="form-control" name="nip" value="<?= $komentar->nip  ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>ID Tacit</label>
-                                <input type="text" class="form-control" name="id_tacit" required>
+                                <input type="text" class="form-control" name="id_tacit" value="<?= $komentar->id_tacit  ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>ID Explicit</label>
-                                <input type="text" class="form-control" name="id_explicit" required>
+                                <input type="text" class="form-control" name="id_explicit" value="<?= $komentar->id_explicit ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Waktu</label>
                                 <div class="input-group date">
                                       <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" name="waktu" id="waktu" class="form-control" placeholder="YYYY-MM-DD" required>
+                                      <input type="text" name="waktu" id="waktu" class="form-control" placeholder="YYYY-MM-DD" value="<?= $komentar->waktu  ?>" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Komentar</label>
-                                <textarea id="tinymce" class="form-control" name="komentar" required></textarea>
+                                <textarea id="tinymce" class="form-control" name="komentar" required><?= $komentar->komentar  ?></textarea>
                             </div>
 
                             <div>

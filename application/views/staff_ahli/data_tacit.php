@@ -6,7 +6,7 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Data Komentar <a href="<?= base_url('staff/tambah_data_komentar') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
+                            <h1 class="page-header">Data Pengetahuan Tacit <a href="<?= base_url('staff_ahli/tambah_data_tacit') ?>" class="btn btn-success"><i class="fa fa-plus"></i></a></h1>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
@@ -15,7 +15,7 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Daftar Komentar 
+                                    Daftar Pengetahuan Tacit 
                                 </div>
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
@@ -26,11 +26,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>ID Tacit</th>
-                                                <th>ID Explicit</th>
                                                 <th>NIP</th>
-                                                <th>Waktu</th>
-                                                <th>Komentar</th>
+                                                <th>Judul</th>
+                                                <th>Kategori</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -38,19 +36,17 @@
                                             <?php $i=1; foreach($data as $row): ?>
                                             <tr>
                                                 <td style="width: 20px !important;" ><?= $i ?></td>
-                                                <td><?= $row->id_tacit ?></td>
-                                                <td><?= $row->id_explicit ?></td>
                                                 <td><?= $row->nip ?></td>
-                                                <td><?= $row->waktu ?></td>
-                                                <td style="text-align: left !important;"><?= substr($row->komentar, 0,150).'...' ?></td>
+                                                <td><?= $row->judul ?></td>
+                                                <td><?= $row->kategori ?></td>
                                                 <td>
                                                     <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                          <li><a href="<?= base_url('staff/edit_data_komentar/'.$row->id_komentar) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                          <li><a href="<?= base_url('staff/detail_data_komentar/'.$row->id_komentar) ?>"><i class="fa fa-eye"></i> Detail</a></li>
-                                                          <li><a href="" onclick="delete_komentar(<?= $row->id_komentar ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                          <li><a href="<?= base_url('staff_ahli/edit_data_tacit/'.$row->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
+                                                          <li><a href="<?= base_url('staff_ahli/detail_data_tacit/'.$row->id_tacit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                          <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -81,22 +77,20 @@
                     });
                 });
 
-                function delete_komentar(id_komentar) {
+                function delete_bahan_baku(id_bahan_baku) {
                     $.ajax({
-                        url: '<?= base_url('staff/data-komentar') ?>',
+                        url: '<?= base_url('kasir/bahan-baku') ?>',
                         type: 'POST',
                         data: {
-                            delete: true,
-                            id_komentar: id_komentar
+                            id_bahan_baku: id_bahan_baku,
+                            delete: true
                         },
-                        success: function(response) {
-                            var json = $.parseJSON(response);
-                            window.location = '<?= base_url('staff/data-komentar') ?>';
+                        success: function() {
+                            window.location = '<?= base_url('kasir/bahan-baku') ?>';
                         },
-                        error: function(e) {
-                            console.log(e.responseText);
+                        error: function(err) {
+                            console.log(err.responseText);
                         }
                     });
-                    return false;
                 }
             </script>

@@ -11,7 +11,12 @@ class MY_Controller extends CI_Controller
 
 	public function template($data, $template = 'admin')
 	{
-		return $this->load->view($template . '/template/layout', $data);
+		if($template == "staff_ahli"){
+			return $this->load->view('staff_ahli/template/layout', $data);
+		}
+		else{
+			return $this->load->view($template . '/template/layout', $data);
+		}
 	}
 
 	public function POST($name)

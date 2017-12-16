@@ -48,7 +48,7 @@
                                                         <ul class="dropdown-menu" role="menu">
                                                           <li><a href="<?= base_url('staff/edit-data-user/'.$row->nip) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
                                                           <li><a href="<?= base_url('staff/detail-data-user/'.$row->nip) ?>"><i class="fa fa-eye"></i> Detail</a></li>
-                                                          <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                          <li><a href="" onclick="delete_user(<?= $row->nip ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -79,20 +79,22 @@
                     });
                 });
 
-                function delete_bahan_baku(id_bahan_baku) {
+                function delete_user(nip) {
                     $.ajax({
-                        url: '<?= base_url('kasir/bahan-baku') ?>',
+                        url: '<?= base_url('staff/data-user') ?>',
                         type: 'POST',
                         data: {
-                            id_bahan_baku: id_bahan_baku,
-                            delete: true
+                            delete: true,
+                            nip: nip
                         },
-                        success: function() {
-                            window.location = '<?= base_url('kasir/bahan-baku') ?>';
+                        success: function(response) {
+                            var json = $.parseJSON(response);
+                            window.location = '<?= base_url('staff/data-user') ?>';
                         },
-                        error: function(err) {
-                            console.log(err.responseText);
+                        error: function(e) {
+                            console.log(e.responseText);
                         }
                     });
+                    return false;
                 }
             </script>

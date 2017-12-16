@@ -22,6 +22,18 @@
                                         </div>
                                     </a>
                                 </div>
+
+                                <div class="col-md-3">
+                                    <a href="<?= base_url('kebagan/hasil_pencarian') ?>">
+                                        <div class="metric">
+                                            <span class="icon"><i class="fa fa-search"></i></span>
+                                            <p>
+                                                <span class="number">_</span>
+                                                <span class="title">Hasil Pencarian</span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

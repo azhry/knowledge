@@ -6,13 +6,13 @@
                     <!-- OVERVIEW -->
                     <div class="panel panel-headline">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Dashboard Staff</h3>
+                            <h3 class="panel-title">Dashboard Staff Ahli</h3>
                             <!--<p class="panel-subtitle">Period: Oct 14, 2016 - Oct 21, 2016</p>-->
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/daftar-pengetahuan-tacit') ?>">
+                                    <a href="<?= base_url('staff_ahli/daftar-pengetahuan-tacit') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
@@ -23,7 +23,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/daftar-pengetahuan-explicit') ?>">
+                                    <a href="<?= base_url('staff_ahli/daftar-pengetahuan-explicit') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
@@ -34,7 +34,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/data-komentar') ?>">
+                                    <a href="<?= base_url('staff_ahli/data-komentar') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-pencil"></i></span>
                                             <p>
@@ -45,7 +45,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/data-user') ?>">
+                                    <a href="<?= base_url('staff_ahli/data-user') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="fa fa-user fa-fw"></i></span>
                                             <p>
@@ -59,7 +59,7 @@
 
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/hasil_pencarian') ?>">
+                                    <a href="<?= base_url('staff_ahli/hasil_pencarian') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="fa fa-search"></i></span>
                                             <p>
@@ -69,6 +69,7 @@
                                         </div>
                                     </a>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

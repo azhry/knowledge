@@ -11,7 +11,7 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                <?= form_open('admin/edit_data_komentar/'.$komentar->id_komentar, ['id' => 'form']) ?>
+                <?= form_open('staff/edit_data_komentar/'.$komentar->id_komentar, ['id' => 'form']) ?>
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>
