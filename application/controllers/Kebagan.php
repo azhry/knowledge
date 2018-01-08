@@ -32,8 +32,39 @@ class Kebagan extends MY_Controller
         $this->template($this->data,'kebagan');
 	}
 
-    public function hasil_pencarian()
+    public function pencarian()
     {
+        if ($this->POST('cari'))
+        {
+            $start = microtime(true);
+            $query = $this->POST('query');
+            $this->load->model('turbo_bm_m');
+            $this->load->model('explicit_m');
+            $this->data['explicit_knowledge'] = $this->explicit_m->get();
+            $this->data['result'] = [];
+            foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
+            {
+                $text = strip_tags($explicit_knowledge->keterangan);
+                $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                if ($idx != -1)
+                {
+                    $explicit_knowledge->keterangan = $text;
+                    $this->data['result'] []= [
+                        'index'     => $idx,
+                        'knowledge' => $explicit_knowledge
+                    ];
+                }
+            }
+            $time_elapsed = microtime(true) - $start;
+            $this->data['response'] = [
+                'result'    => $this->data['result'],
+                'num_rows'  => count($this->data['result']),
+                'elapsed'   => $time_elapsed
+            ];
+            echo json_encode($this->data['response']);
+            exit;
+        }
+
         $this->data['title']        = 'Hasil Pencarian';
         $this->data['content']      = 'kebagan/hasil_pencarian';
         $this->template($this->data,'kebagan');
@@ -137,6 +168,31 @@ class Kebagan extends MY_Controller
         $this->data['title']        = 'Detail Data  User';
         $this->data['content']      = 'kebagan/detail_data_user';
         $this->template($this->data,'kebagan');
+    }
+
+    public function detail_data_explicit()
+    {
+        $this->data['id_explicit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->load->model('explicit_m');
+        $this->data['explicit']     = $this->explicit_m->get_row(['id_explicit' => $this->data['id_explicit']]);
+        if (!isset($this->data['explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan eksplisit tidak ditemukan', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->data['title']        = 'Detail Data Pengetahuan Explicit';
+        $this->data['content']      = 'staff/detail_data_explicit';
+        $this->template($this->data, 'staff');
     }
 
 }
