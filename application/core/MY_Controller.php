@@ -47,6 +47,24 @@ class MY_Controller extends CI_Controller
 		return FALSE;
 	}
 
+	public function upload_img($name, $directory, $tag_name = 'userfile')
+	{
+		if (isset($_FILES[$tag_name]) && strlen($_FILES[$tag_name]['name']) > 0)
+		{
+			$upload_path = realpath(APPPATH . '../assets/' . $directory . '/');
+			@unlink($upload_path . '/' . $name . '.jpg');
+			$config = [
+				'file_name' 		=> $name . '.jpg',
+				'allowed_types'		=> 'jpg|png|bmp|jpeg',
+				'upload_path'		=> $upload_path
+			];
+			$this->load->library('upload');
+			$this->upload->initialize($config);
+			return $this->upload->do_upload($tag_name);
+		}
+		return FALSE;
+	}
+
 	public function dump($var)
 	{
 		echo '<pre>';

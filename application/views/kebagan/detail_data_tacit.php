@@ -27,7 +27,7 @@
                                                 <td>
                                                     <?php 
                                                         $user = $this->user_m->get_row(['nip' => $tacit->nip]);
-                                                        echo $user ? '<a href="' . base_url('staff/detail-data-user/' . $tacit->nip) . '">' . $user->nama . '</a>' : '-';
+                                                        echo $user ? '<a href="' . base_url('kebagan/detail-data-user/' . $tacit->nip) . '">' . $user->nama . '</a>' : '-';
                                                     ?>
                                                 </td>
                                             </tr>
@@ -75,7 +75,7 @@
                             <div class="panel panel-default">
                                 <!-- /.panel-heading -->
                                 <div class="panel-body">
-                                    <?= form_open('staff/detail-data-tacit/' . $id_tacit) ?>
+                                    <?= form_open('kebagan/detail-data-tacit/' . $id_tacit) ?>
                                         <textarea rows="5" class="form-control" placeholder="Komentar anda.." name="komentar"></textarea>
                                         <input type="submit" name="submit" value="Kirim" class="btn btn-success">
                                     <?= form_close() ?>
@@ -101,7 +101,7 @@
                                     <small> 
                                         <?php  
                                             $user = $this->user_m->get_row(['nip' => $row->nip]);
-                                            echo $user ? '<a href="' . base_url('staff/detail-data-user/' . $row->nip) . '">' . $user->nama . '</a>' : '-';
+                                            echo $user ? '<a href="' . base_url('kebagan/detail-data-user/' . $row->nip) . '">' . $user->nama . '</a>' : '-';
                                         ?> mengomentari pada <?= $row->waktu ?> 
                                     </small>
                                 </div>

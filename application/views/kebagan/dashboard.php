@@ -24,12 +24,12 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('kebagan/hasil_pencarian') ?>">
+                                    <a href="<?= base_url('kebagan/pencarian') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="fa fa-search"></i></span>
                                             <p>
                                                 <span class="number">_</span>
-                                                <span class="title">Hasil Pencarian</span>
+                                                <span class="title">Searching</span>
                                             </p>
                                         </div>
                                     </a>

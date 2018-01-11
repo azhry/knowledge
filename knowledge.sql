@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2017 at 02:57 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Jan 11, 2018 at 08:03 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -42,7 +44,7 @@ CREATE TABLE `explicit` (
 --
 
 INSERT INTO `explicit` (`id_explicit`, `judul`, `kategori`, `keterangan`, `dokumen`, `status`, `nip`, `waktu`) VALUES
-(1, 'Judul Explicit 111', 'Kategori Explicit 1213', '<p>Keterangan Explicit 132432</p>', '20171127202205.pdf', 0, '12345', '2017-11-27 20:51:10');
+(2, 'Test', 'test', '<p>test</p>', '20180112002516.pdf', 0, '12345', '2018-01-12 00:25:17');
 
 -- --------------------------------------------------------
 
@@ -55,9 +57,22 @@ CREATE TABLE `komentar` (
   `id_tacit` int(11) NOT NULL,
   `id_explicit` int(11) NOT NULL,
   `nip` varchar(30) NOT NULL,
-  `waktu` datetime NOT NULL,
+  `waktu` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `komentar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `komentar`
+--
+
+INSERT INTO `komentar` (`id_komentar`, `id_tacit`, `id_explicit`, `nip`, `waktu`, `komentar`) VALUES
+(1, 1, 0, '12345', '2018-01-11 22:45:57', 'haha'),
+(2, 1, 0, '12345', '2018-01-11 22:54:40', 'Ini komentarku, maka komentarmu?'),
+(3, 0, 1, '12345', '2018-01-11 23:04:57', 'Ini komentarmu, mana komentarku?'),
+(4, 0, 1, '09021181520021', '2018-01-11 23:24:18', 'tes'),
+(5, 2, 0, '09021181520021', '2018-01-11 23:27:12', 'hihi'),
+(6, 2, 0, '123', '2018-01-12 01:37:33', 'wess'),
+(7, 0, 2, '123', '2018-01-12 01:40:43', 'tes');
 
 -- --------------------------------------------------------
 
@@ -81,7 +96,8 @@ CREATE TABLE `tacit` (
 --
 
 INSERT INTO `tacit` (`id_tacit`, `nip`, `judul`, `kategori`, `masalah`, `solusi`, `waktu`, `status`) VALUES
-(1, '12345', 'Judul 13', 'Kategori Tacit 13', '<p>Masalah Tacit 13</p>', '<p>Solusi Tacit 13</p>', '2017-11-27 18:03:50', 0);
+(1, '12345', 'Judul 13', 'Kategori Tacit 13', '<p>Masalah Tacit 13</p>', '<p>Solusi Tacit 13</p>', '2017-11-27 18:03:50', 0),
+(2, '12345', 'Tacit', 'cit', '<p>cit</p>', '<p>cit</p>', '2018-01-11 22:32:56', 0);
 
 -- --------------------------------------------------------
 
@@ -107,8 +123,9 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`nip`, `password`, `nama`, `jabatan`, `bagian`, `email`, `no_hp`, `userfile`, `alamat`) VALUES
 ('09021181419007', '985fabf8f96dc1c4c306341031569937', 'Azhary Arliansyah', 'Admin', 'Keuangan', 'arliansyah_azhary@yahoo.com', '08080808', 'aaabbbccc', 'GG LMPGsdfsd'),
-('09021181520021', '985fabf8f96dc1c4c306341031569937', 'Aaaaaa', 'Kebagan', 'Kepala', 'arliansyah_azhary@yahoo.com', '324234', '', 'asdasdas'),
-('12345', '985fabf8f96dc1c4c306341031569937', 'AABB', 'Staff', 'AABB', 'arliansyah_azhary@yahoo.com', '4353', '', 'AABB');
+('09021181520021', '985fabf8f96dc1c4c306341031569937', 'Aaaaaazzz', 'Kebagan', 'Kepalaaa', 'arliansyah_azhary@yahoo.coms', '32453', '', 'asd567iyasdasdas'),
+('123', '985fabf8f96dc1c4c306341031569937', 'Azh', 'Staff Ahli', 'Hehe', 'arliansyah_azhary@yahoo.com', '081234265011', '', 'Komplek Bougenville KM. 7 Palembang'),
+('12345', 'a4f95a239896cd1fada61069976b9dda', 'AABBCC', 'Staff', 'AABBDD', 'arliansyah_azhary@yahoo.commm', 'trhfh43', '', 'AdABB');
 
 --
 -- Indexes for dumped tables
@@ -151,17 +168,21 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `explicit`
 --
 ALTER TABLE `explicit`
-  MODIFY `id_explicit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_explicit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `tacit`
 --
 ALTER TABLE `tacit`
-  MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -44,16 +44,16 @@
 									<input class="form-control" placeholder="Password" type="password" name="password">
 								</div>
 								<br>
-								<div class="form-group clearfix">
+								<!-- <div class="form-group clearfix">
 									<label class="fancy-checkbox element-left">
 										<input type="checkbox">
 										<span>Remember me</span>
 									</label>
-								</div>
+								</div> -->
 								<button type="submit" name="login" value="Login" class="btn btn-primary btn-lg btn-block">LOGIN</button>
-								<div class="bottom">
+								<!-- <div class="bottom">
 									<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">Forgot password?</a></span>
-								</div>
+								</div> -->
 							<?= form_close() ?>
 						</div>
 					</div>

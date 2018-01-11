@@ -40,21 +40,46 @@ class Kebagan extends MY_Controller
             $query = $this->POST('query');
             $this->load->model('turbo_bm_m');
             $this->load->model('explicit_m');
-            $this->data['explicit_knowledge'] = $this->explicit_m->get();
+            $this->load->model('tacit_m');
+
             $this->data['result'] = [];
-            foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
+            $kategori = $this->POST('kategori');
+
+            if ($kategori == 0)
             {
-                $text = strip_tags($explicit_knowledge->keterangan);
-                $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
-                if ($idx != -1)
+                $this->data['tacit_knowledge'] = $this->tacit_m->get_tacit();
+                foreach ($this->data['tacit_knowledge'] as $tacit_knowledge)
                 {
-                    $explicit_knowledge->keterangan = $text;
-                    $this->data['result'] []= [
-                        'index'     => $idx,
-                        'knowledge' => $explicit_knowledge
-                    ];
+                    $text = strip_tags($tacit_knowledge->masalah);
+                    $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                    if ($idx != 1)
+                    {
+                        $tacit_knowledge->masalah = $text;
+                        $this->data['result'] []= [
+                            'index'     => $idx,
+                            'knowledge' => $tacit_knowledge
+                        ];
+                    }
                 }
             }
+            else if ($kategori == 1)
+            {
+                $this->data['explicit_knowledge'] = $this->explicit_m->get_explicit();
+                foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
+                {
+                    $text = strip_tags($explicit_knowledge->keterangan);
+                    $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                    if ($idx != -1)
+                    {
+                        $explicit_knowledge->keterangan = $text;
+                        $this->data['result'] []= [
+                            'index'     => $idx,
+                            'knowledge' => $explicit_knowledge
+                        ];
+                    }
+                }    
+            }
+            
             $time_elapsed = microtime(true) - $start;
             $this->data['response'] = [
                 'result'    => $this->data['result'],
@@ -190,9 +215,145 @@ class Kebagan extends MY_Controller
             exit;
         }
 
+        $this->load->model('komentar_m');
+
+        if ($this->POST('submit'))
+        {
+            $this->data['komentar'] = [
+                'id_explicit'   => $this->data['id_explicit'],
+                'id_tacit'      => 0,
+                'nip'           => $this->data['nip'],
+                'komentar'      => $this->POST('komentar')
+            ];
+            $this->komentar_m->insert($this->data['komentar']);
+            $this->flashmsg('<i class="lnr lnr-success"></i> Komentar berhasil dimasukkan');
+            redirect('kebagan/detail-data-explicit/' . $this->data['id_explicit']);
+            exit;
+        }
+
+        $this->data['komentar']     = $this->komentar_m->get_by_order('waktu', 'ASC', ['id_explicit' => $this->data['id_explicit']]);
         $this->data['title']        = 'Detail Data Pengetahuan Explicit';
-        $this->data['content']      = 'staff/detail_data_explicit';
-        $this->template($this->data, 'staff');
+        $this->data['content']      = 'kebagan/detail_data_explicit';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function detail_data_tacit()
+    {
+        $this->data['id_tacit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->load->model('tacit_m');
+        $this->data['tacit']        = $this->tacit_m->get_row(['id_tacit' => $this->data['id_tacit']]);
+        if (!isset($this->data['id_tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan tacit tidak ditemukan', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->load->model('komentar_m');
+
+        if ($this->POST('submit'))
+        {
+            $this->data['komentar'] = [
+                'id_tacit'      => $this->data['id_tacit'],
+                'id_explicit'   => 0,
+                'nip'           => $this->data['nip'],
+                'komentar'      => $this->POST('komentar')
+            ];
+            $this->komentar_m->insert($this->data['komentar']);
+            $this->flashmsg('<i class="lnr lnr-success"></i> Komentar berhasil dimasukkan');
+            redirect('kebagan/detail-data-tacit/' . $this->data['id_tacit']);
+            exit;
+        }
+
+        $this->data['komentar']     = $this->komentar_m->get_by_order('waktu', 'ASC', ['id_tacit' => $this->data['id_tacit']]);
+        $this->data['title']        = 'Detail Data Pengetahuan Tacit';
+        $this->data['content']      = 'kebagan/detail_data_tacit';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function profile()
+    {
+        $this->load->model('user_m');
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+
+        if ($this->POST('submit'))
+        {
+            $msg        = 'Data profile berhasil diubah';
+            $msg_type   = 'success';
+            $password_lama = $this->POST('password_lama');
+            $password_baru = $this->POST('password_baru');
+            $password_lagi = $this->POST('password_lagi');
+            if (!empty($password_lama) && !empty($password_baru) && !empty($password_lagi))
+            {
+                if (md5($password_lama) == $this->data['user']->password)
+                {
+                    if ($password_baru == $password_lagi)
+                    {
+                        $this->user_m->update($this->data['nip'], [
+                            'password' => md5($password_baru)
+                        ]);
+                    }
+                    else
+                    {
+                        $msg = 'Password baru dan password lagi tidak cocok';
+                        $msg_type = 'danger';
+                    }
+                }
+                else
+                {
+                    $msg = 'Password lama tidak cocok';
+                    $msg_type = 'danger';
+                }
+            }
+
+            $this->upload_img($this->POST('nip'), 'img/user', 'foto');
+            if ($this->user_m->update($this->data['nip'], [
+                'nip'       => $this->POST('nip'),
+                'nama'      => $this->POST('nama'),
+                'bagian'    => $this->POST('bagian'),
+                'email'     => $this->POST('email'),
+                'no_hp'     => $this->POST('no_hp'),
+                'alamat'    => $this->POST('alamat')
+            ]))
+            {
+                $this->session->set_userdata('nip', $this->POST('nip'));
+            }
+            else
+            {
+                $msg = 'Data profile gagal diubah';
+                $msg_type = 'danger';
+            }
+
+            $this->flashmsg($msg, $msg_type);
+            redirect('kebagan/profile');
+            exit;
+        }
+
+        $this->data['title']        = 'Profile';
+        $this->data['content']      = 'kebagan/profile';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function grafik_pengetahuan()
+    {
+        $this->load->model('tacit_m');
+        $this->load->model('explicit_m');
+
+        $this->data['tacit']                = $this->tacit_m->get(['status' => 0]);
+        $this->data['tacit_validasi']       = $this->tacit_m->get(['status' => 1]);
+        $this->data['explicit']             = $this->explicit_m->get(['status' => 0]);
+        $this->data['explicit_validasi']    = $this->explicit_m->get(['status' => 1]);
+        $this->data['title']                = 'Grafik Pengetahuan';
+        $this->data['content']              = 'kebagan/grafik_pengetahuan';
+        $this->template($this->data, 'kebagan');
     }
 
 }

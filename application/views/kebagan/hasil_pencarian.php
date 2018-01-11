@@ -22,12 +22,22 @@
     <!-- WRAPPER -->
     <div id="wrapper">
 		<div class="container">
-			<h2>Cari Pengetahuan Eksplisit</h2>
+			<h2>Cari Pengetahuan</h2>
 			<div class="row" style="margin-top: 5%;">
 				<div class="col-md-8">
-					<div class="input-group">
-						<input type="text" name="query" id="query" placeholder="Kata kunci" class="form-control">
-						<span class="input-group-addon" id="search"><i class="fa fa-search"></i></span>			
+					<div class="form-group">
+						<label for="kategori">Kategori</label>
+						<select name="kategori" id="kategori" class="form-control">
+							<option value="0">Tacit</option>
+							<option value="1">Explicit</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="query">Kata kunci</label>
+						<div class="input-group">
+							<input type="text" name="query" id="query" placeholder="Kata kunci" class="form-control">
+							<span class="input-group-addon" id="search"><i class="fa fa-search"></i></span>			
+						</div>
 					</div>
 					<div style="padding: 2%;" id="time-elapsed"></div>
 				</div>
@@ -54,21 +64,26 @@
 				type: 'POST',
 				data: {
 					cari: true,
-					query: $('#query').val()
+					query: $('#query').val(),
+					kategori: $('#kategori').val()
 				},
 				success: function(response) {
 					$('#result-container').html('');
 					var html = '';
 					var json = $.parseJSON(response);
+					var kategori = $('#kategori').val();
+					var nama_kategori = kategori == 0 ? 'tacit' : 'explicit';
 					for (var i = 0; i < json.result.length; i++) {
-						var keterangan = json.result[i].knowledge.keterangan;
+						var keterangan = nama_kategori == 'tacit' ? json.result[i].knowledge.masalah : json.result[i].knowledge.keterangan;
 						html += '<div class="row" style="margin-top: 1%;">' +
 							'<div class="col-md-8 hasil">' +
-								'<a href="<?= base_url('kebagan/detail-data-explicit') ?>/' + json.result[i].knowledge.id_explicit + '"><h3>' + json.result[i].knowledge.judul + '</h3></a>' +
+								'<a href="<?= base_url('kebagan/detail-data-') ?>' + nama_kategori + '/' + (nama_kategori == 'tacit' ? json.result[i].knowledge.id_tacit : json.result[i].knowledge.id_explicit) + '"><h3><i class="fa fa-file-o"></i> ' + json.result[i].knowledge.judul + '</h3></a>' +
+								'<h5><i>Oleh ' + json.result[i].knowledge.nama + ' pada ' + json.result[i].knowledge.waktu + '</i></h5>' + 
 								'<div class="keterangan" style="text-align: justify;">' + keterangan + '</div>' +
 							'</div>' +
 						'</div>';
 					}
+
 					$('#result-container').html(html);
 					$('div.keterangan').mark($('#query').val(), {
 						element: 'span',

@@ -17,7 +17,7 @@
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
                                                 <span class="number"><?= count($tacit) ?></span>
-                                                <span class="title">Data Tacit Knowledge</span>
+                                                <span class="title">Tacit Knowledge</span>
                                             </p>
                                         </div>
                                     </a>
@@ -28,7 +28,7 @@
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
                                                 <span class="number"><?= count($explicit) ?></span>
-                                                <span class="title">Data Explicit Knowledge</span>
+                                                <span class="title">Explicit Knowledge</span>
                                             </p>
                                         </div>
                                     </a>
@@ -39,7 +39,7 @@
                                             <span class="icon"><i class="lnr lnr-pencil"></i></span>
                                             <p>
                                                 <span class="number"><?= count($komentar) ?></span>
-                                                <span class="title">Data Komentar</span>
+                                                <span class="title">Komentar</span>
                                             </p>
                                         </div>
                                     </a>
@@ -59,12 +59,12 @@
 
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff_ahli/hasil_pencarian') ?>">
+                                    <a href="<?= base_url('staff_ahli/pencarian') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="fa fa-search"></i></span>
                                             <p>
                                                 <span class="number">_</span>
-                                                <span class="title">Hasil Pencarian</span>
+                                                <span class="title">Searching</span>
                                             </p>
                                         </div>
                                     </a>
