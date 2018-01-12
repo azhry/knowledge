@@ -288,32 +288,7 @@ class Kebagan extends MY_Controller
         {
             $msg        = 'Data profile berhasil diubah';
             $msg_type   = 'success';
-            $password_lama = $this->POST('password_lama');
-            $password_baru = $this->POST('password_baru');
-            $password_lagi = $this->POST('password_lagi');
-            if (!empty($password_lama) && !empty($password_baru) && !empty($password_lagi))
-            {
-                if (md5($password_lama) == $this->data['user']->password)
-                {
-                    if ($password_baru == $password_lagi)
-                    {
-                        $this->user_m->update($this->data['nip'], [
-                            'password' => md5($password_baru)
-                        ]);
-                    }
-                    else
-                    {
-                        $msg = 'Password baru dan password lagi tidak cocok';
-                        $msg_type = 'danger';
-                    }
-                }
-                else
-                {
-                    $msg = 'Password lama tidak cocok';
-                    $msg_type = 'danger';
-                }
-            }
-
+            
             $this->upload_img($this->POST('nip'), 'img/user', 'foto');
             if ($this->user_m->update($this->data['nip'], [
                 'nip'       => $this->POST('nip'),
@@ -339,6 +314,57 @@ class Kebagan extends MY_Controller
 
         $this->data['title']        = 'Profile';
         $this->data['content']      = 'kebagan/profile';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function sunting_password()
+    {
+        $this->load->model('user_m');
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+
+        if ($this->POST('submit'))
+        {
+            $msg        = 'Password berhasil diubah';
+            $msg_type   = 'success';
+
+            $password_lama = $this->POST('password_lama');
+            $password_baru = $this->POST('password_baru');
+            $password_lagi = $this->POST('password_lagi');
+            if (!empty($password_lama) && !empty($password_baru) && !empty($password_lagi))
+            {
+                if (md5($password_lama) == $this->data['user']->password)
+                {
+                    if ($password_baru == $password_lagi)
+                    {
+                        $this->user_m->update($this->data['nip'], [
+                            'password' => md5($password_baru)
+                        ]);
+                    }
+                    else
+                    {
+                        $msg = 'Password baru dan password lagi tidak cocok';
+                        $msg_type = 'danger';
+                    }
+                }
+                else
+                {
+                    $msg = 'Password lama tidak cocok';
+                    $msg_type = 'danger';
+                }
+            }
+            else
+            {
+                $msg = 'Anda tidak mengubah password';
+                $msg_type = 'warning';
+            }
+
+            $this->flashmsg($msg, $msg_type);
+            redirect('kebagan/sunting-password');
+            exit;
+        }
+
+        $this->data['title']        = 'Sunting Password';
+        $this->data['content']      = 'kebagan/sunting_password';
         $this->template($this->data, 'kebagan');
     }
 
