@@ -11,6 +11,11 @@
                         <li><a href="<?= base_url('staff_ahli/pencarian') ?>" class=""><i class="fa fa-search"></i> <span>Searching</span></a></li></li>
                     </ul>
                 </nav>
+                <br>
+                <br>
+                <center>
+                    <img src="<?= base_url('assets/img/logo.png') ?>" width="100" height="130" style="margin: 0; padding: 0;">
+                </center>
             </div>
         </div>
         <!-- END LEFT SIDEBAR -->
