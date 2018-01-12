@@ -115,7 +115,7 @@ class Staff extends MY_Controller
 
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan tacit berhasil disimpan');
 
-            redirect('staff/tambah-data-tacit');
+            redirect('staff/daftar-pengetahuan-tacit');
             exit;
         }
 
@@ -142,6 +142,13 @@ class Staff extends MY_Controller
             $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan tacit tidak ditemukan', 'danger');
             redirect('staff/daftar-pengetahuan-tacit');
             exit;
+        }
+
+        if ($this->data['tacit']->nip != $this->data['nip'])
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+            redirect('staff/daftar-pengetahuan-tacit');
+            exit;   
         }
 
         if($this->POST('simpan'))
@@ -204,7 +211,7 @@ class Staff extends MY_Controller
                 $this->flashmsg('<i class="glyphicon glyphicon-warning"></i> Dokumen gagal diupload', 'danger');
             }
 
-            redirect('staff/tambah-data-explicit');
+            redirect('staff/daftar-pengetahuan-explicit');
             exit;
         }
 
@@ -230,6 +237,13 @@ class Staff extends MY_Controller
             $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan eksplisit tidak ditemukan', 'danger');
             redirect('staff/daftar-pengetahuan-explicit');
             exit;
+        }
+
+        if ($this->data['explicit']->nip != $this->data['nip'])
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+            redirect('staff/daftar-pengetahuan-explicit');
+            exit;   
         }
 
         if($this->POST('simpan'))
@@ -357,8 +371,17 @@ class Staff extends MY_Controller
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Komentar berhasil diedit');
 
             redirect('staff/edit_data_komentar/'.$id_komentar);
+            exit;
         }
+        
         $this->data['komentar']     = $this->komentar_m->get_row(['id_komentar' => $id]);
+        if ($this->data['komentar']->nip != $this->data['nip'])
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+            redirect('staff/data-komentar/');
+            exit;
+        }
+
         $this->data['title']        = 'Edit Data Komentar';
         $this->data['content']      = 'staff/edit_data_komentar';
         $this->template($this->data, 'staff');
@@ -433,6 +456,13 @@ class Staff extends MY_Controller
             $this->flashmsg('<i class="fa fa-warning"></i> Data pengguna ' . $this->data['nip'] . ' tidak ditemukan', 'danger');
             redirect('staff/data-user');
             exit;
+        }
+
+        if ($this->data['user']->nip != $this->data['nip'])
+        {
+            $this->flashmsg('<i class="fa fa-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+            redirect('staff/data-user');
+            exit;   
         }
 
         if($this->POST('simpan'))
@@ -545,32 +575,7 @@ class Staff extends MY_Controller
         {
             $msg        = 'Data profile berhasil diubah';
             $msg_type   = 'success';
-            $password_lama = $this->POST('password_lama');
-            $password_baru = $this->POST('password_baru');
-            $password_lagi = $this->POST('password_lagi');
-            if (!empty($password_lama) && !empty($password_baru) && !empty($password_lagi))
-            {
-                if (md5($password_lama) == $this->data['user']->password)
-                {
-                    if ($password_baru == $password_lagi)
-                    {
-                        $this->user_m->update($this->data['nip'], [
-                            'password' => md5($password_baru)
-                        ]);
-                    }
-                    else
-                    {
-                        $msg = 'Password baru dan password lagi tidak cocok';
-                        $msg_type = 'danger';
-                    }
-                }
-                else
-                {
-                    $msg = 'Password lama tidak cocok';
-                    $msg_type = 'danger';
-                }
-            }
-
+            
             $this->upload_img($this->POST('nip'), 'img/user', 'foto');
             if ($this->user_m->update($this->data['nip'], [
                 'nip'       => $this->POST('nip'),
@@ -596,6 +601,57 @@ class Staff extends MY_Controller
 
         $this->data['title']        = 'Profile';
         $this->data['content']      = 'staff/profile';
+        $this->template($this->data, 'staff');
+    }
+
+    public function sunting_password()
+    {
+        $this->load->model('user_m');
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+
+        if ($this->POST('submit'))
+        {
+            $msg        = 'Password berhasil diubah';
+            $msg_type   = 'success';
+
+            $password_lama = $this->POST('password_lama');
+            $password_baru = $this->POST('password_baru');
+            $password_lagi = $this->POST('password_lagi');
+            if (!empty($password_lama) && !empty($password_baru) && !empty($password_lagi))
+            {
+                if (md5($password_lama) == $this->data['user']->password)
+                {
+                    if ($password_baru == $password_lagi)
+                    {
+                        $this->user_m->update($this->data['nip'], [
+                            'password' => md5($password_baru)
+                        ]);
+                    }
+                    else
+                    {
+                        $msg = 'Password baru dan password lagi tidak cocok';
+                        $msg_type = 'danger';
+                    }
+                }
+                else
+                {
+                    $msg = 'Password lama tidak cocok';
+                    $msg_type = 'danger';
+                }
+            }
+            else
+            {
+                $msg = 'Anda tidak mengubah password';
+                $msg_type = 'warning';
+            }
+
+            $this->flashmsg($msg, $msg_type);
+            redirect('staff/sunting-password');
+            exit;
+        }
+
+        $this->data['title']        = 'Sunting Password';
+        $this->data['content']      = 'staff/sunting_password';
         $this->template($this->data, 'staff');
     }
 }

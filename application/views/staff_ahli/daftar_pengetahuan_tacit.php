@@ -56,8 +56,8 @@
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
                                                             <li><a href="<?= base_url('staff_ahli/detail-data-tacit/' . $row->id_tacit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                            <?php if ($row->nip == $nip): ?>
                                                             <li><a href="<?= base_url('staff_ahli/edit-data-tacit/' . $row->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                            <?php if ($nip == $row->nip): ?>
                                                             <li><a href="" onclick="delete_tacit(<?= $row->id_tacit ?>)"><i class="lnr lnr-trash"></i> Hapus</a></li>
                                                             <?php endif; ?>
                                                         </ul>
@@ -117,6 +117,7 @@
                         },
                         success: function(response) {
                             $('#btn-' + id_tacit).html(response);
+                            window.location = '<?= base_url('staff-ahli/daftar-pengetahuan-tacit') ?>';
                         },
                         error: function (e) {
                             console.log(e.responseText);

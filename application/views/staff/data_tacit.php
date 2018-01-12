@@ -44,9 +44,13 @@
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
-                                                          <li><a href="<?= base_url('admin/edit_data_tacit/'.$row->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
-                                                          <li><a href="<?= base_url('admin/detail_data_tacit/'.$row->id_tacit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
-                                                          <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                            <?php if ($row->nip == $nip): ?>
+                                                            <li><a href="<?= base_url('admin/edit_data_tacit/'.$row->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
+                                                            <?php endif; ?>
+                                                            <li><a href="<?= base_url('admin/detail_data_tacit/'.$row->id_tacit) ?>"><i class="fa fa-eye"></i> Detail</a></li>
+                                                            <?php if ($row->nip == $nip): ?>
+                                                            <li><a href="" onclick="delete_data()"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                            <?php endif; ?>
                                                         </ul>
                                                     </div>
                                                 </td>
