@@ -57,8 +57,14 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#query').on('keypress', function(e) {
+			if (e.which == 13) {
+				$('#search').click();
+				return false;
+			}
+		});
+
 		$('#search').on('click', function() {
-			console.log($('#query').val());
 			$.ajax({
 				url: '<?= base_url('kebagan/pencarian') ?>',
 				type: 'POST',

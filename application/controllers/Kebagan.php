@@ -60,22 +60,41 @@ class Kebagan extends MY_Controller
                             'knowledge' => $tacit_knowledge
                         ];
                     }
+                    else
+                    {
+                        $text = strip_tags($tacit_knowledge->solusi);
+                        $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                        if ($idx != 1)
+                        {
+                            $tacit_knowledge->masalah = $text;
+                            $this->data['result'] []= [
+                                'index'     => $idx,
+                                'knowledge' => $tacit_knowledge
+                            ];
+                        }
+                    }
                 }
             }
             else if ($kategori == 1)
             {
+                $docsPath = FCPATH . '/assets/dokumen/';
                 $this->data['explicit_knowledge'] = $this->explicit_m->get_explicit();
                 foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
                 {
-                    $text = strip_tags($explicit_knowledge->keterangan);
-                    $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
-                    if ($idx != -1)
+                    if (file_exists($docsPath . $explicit_knowledge->dokumen))
                     {
-                        $explicit_knowledge->keterangan = $text;
-                        $this->data['result'] []= [
-                            'index'     => $idx,
-                            'knowledge' => $explicit_knowledge
-                        ];
+                        $parser = new \Smalot\PdfParser\Parser();
+                        $pdf = $parser->parseFile($docsPath . $explicit_knowledge->dokumen);
+                        $text = $pdf->getText();
+                        $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                        if ($idx != -1)
+                        {
+                            $explicit_knowledge->keterangan = $text;
+                            $this->data['result'] []= [
+                                'index'     => $idx,
+                                'knowledge' => $explicit_knowledge
+                            ];
+                        }
                     }
                 }    
             }
@@ -379,6 +398,17 @@ class Kebagan extends MY_Controller
         $this->data['explicit_validasi']    = $this->explicit_m->get(['status' => 1]);
         $this->data['title']                = 'Grafik Pengetahuan';
         $this->data['content']              = 'kebagan/grafik_pengetahuan';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function knowledge_base()
+    {
+        $this->load->model('tacit_m');
+        $this->load->model('explicit_m');
+        $this->data['tacit']    = $this->tacit_m->get_tacit(['user.nip' => $this->data['nip']]);
+        $this->data['explicit'] = $this->explicit_m->get_explicit(['user.nip' => $this->data['nip']]);
+        $this->data['title']    = 'My Knowledge';
+        $this->data['content']  = 'kebagan/knowledge_base';
         $this->template($this->data, 'kebagan');
     }
 

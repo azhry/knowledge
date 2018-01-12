@@ -9,6 +9,7 @@
                         <li><a href="<?= base_url('staff/data-komentar') ?>" class=""><i class="lnr lnr-pencil"></i> <span>Komentar</span></a></li></li>
                         <li><a href="<?= base_url('staff/data-user') ?>" class=""><i class="lnr lnr-user"></i> <span>Data User</span></a></li></li>
                         <li><a href="<?= base_url('staff/pencarian') ?>" class=""><i class="fa fa-search"></i> <span>Searching</span></a></li></li>
+                        <li><a href="<?= base_url('staff/knowledge-base') ?>"><i class="fa fa-lightbulb-o"></i> Knowledge Base</a></li>
                     </ul>
                 </nav>
                 <br>
