@@ -563,7 +563,7 @@ class Staff_ahli extends MY_Controller
                 {
                     $text = strip_tags($tacit_knowledge->masalah);
                     $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
-                    if ($idx != 1)
+                    if ($idx != -1)
                     {
                         $tacit_knowledge->masalah = $text;
                         $this->data['result'] []= [
@@ -575,7 +575,7 @@ class Staff_ahli extends MY_Controller
                     {
                         $text = strip_tags($tacit_knowledge->solusi);
                         $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
-                        if ($idx != 1)
+                        if ($idx != -1)
                         {
                             $tacit_knowledge->masalah = $text;
                             $this->data['result'] []= [
