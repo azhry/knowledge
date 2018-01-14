@@ -5,13 +5,18 @@
                 <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-8">
                             <h1 class="page-header" style="text-align: left;"><?= $tacit->judul ?></h1>
                         </div>
-                        <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    
+                    <div class="row">
+                        <div class="col-md-offset-9 col-md-3">
+                            <a class="btn btn-primary" href="<?= base_url('staff/edit-data-tacit/' . $tacit->id_tacit) ?>"><i class="lnr lnr-pencil"></i> Edit</a>
+                            <a class="btn btn-danger" href="" onclick="delete_tacit(<?= $tacit->id_tacit ?>)"><i class="lnr lnr-trash"></i> Hapus</a>
+                        </div>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -125,4 +130,23 @@
                         responsive: true
                     })
                 });
+
+                function delete_tacit(id_tacit) {
+                    $.ajax({
+                        url: '<?= base_url('staff/daftar-pengetahuan-tacit') ?>',
+                        type: 'POST',
+                        data: {
+                            delete: true,
+                            id_tacit: id_tacit,
+                            nip: '<?= $nip ?>'
+                        },
+                        success: function(response) {
+                            var json = $.parseJSON(response);
+                        },
+                        error: function(e) {
+                            console.log(e.responseText);
+                        }
+                    });
+                    return false;
+                }
             </script>

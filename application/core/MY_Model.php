@@ -88,29 +88,34 @@ class MY_Model extends CI_Model
 
 	public function insert($data)
 	{
+		$this->db->query('SET foreign_key_checks = 0;');
 		return $this->db->insert($this->data['table_name'], $data);
 	}
 
 	public function update($pk, $data)
 	{
+		$this->db->query('SET foreign_key_checks = 0;');
 		$this->db->where($this->data['primary_key'], $pk);
 		return $this->db->update($this->data['table_name'], $data);
 	}
 
 	public function update_where($cond, $data)
 	{
+		$this->db->query('SET foreign_key_checks = 0;');
 		$this->db->where($cond);
 		return $this->db->update($this->data['table_name'], $data);
 	}
 
 	public function delete($pk)
 	{
+		$this->db->query('SET foreign_key_checks = 0;');
 		$this->db->where($this->data['primary_key'], $pk);
 		return $this->db->delete($this->data['table_name']);
 	}
 
 	public function delete_by($cond)
 	{
+		$this->db->query('SET foreign_key_checks = 0;');
 		$this->db->where($cond);
 		return $this->db->delete($this->data['table_name']);
 	}

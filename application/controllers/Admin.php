@@ -54,6 +54,12 @@ class Admin extends MY_Controller
     // user
     public function data_user()
     {
+        if ($this->POST('nip') && $this->POST('delete'))
+        {
+            $this->user_m->delete($this->POST('nip'));
+            exit;
+        }
+
         $this->data['data']        = $this->user_m->get();
         $this->data['title']        = 'Data User';
         $this->data['content']      = 'admin/data_user';
@@ -75,7 +81,7 @@ class Admin extends MY_Controller
                 'alamat'    => $this->POST('alamat')
             ];
 
-            // $this->upload($this->POST('nip'), 'userfile', 'doc');
+            $this->upload_img($this->POST('nip'), 'img/user', 'foto');
 
             $this->user_m->insert($this->data['data_user']);
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil disimpan');
@@ -125,6 +131,7 @@ class Admin extends MY_Controller
                 $this->data['data_user']['password'] = md5($password);
             }
 
+            $this->upload_img($this->POST('nip'), 'img/user', 'foto');
             $this->user_m->update($this->data['nip'], $this->data['data_user']);
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil diedit');
             redirect('admin/edit-data-user/' . $this->data['nip']);
@@ -143,5 +150,172 @@ class Admin extends MY_Controller
         $this->data['title']        = 'Detail Data  User';
         $this->data['content']      = 'admin/detail_data_user';
         $this->template($this->data);
+    }
+
+
+    public function pencarian()
+    {
+        if ($this->POST('cari'))
+        {
+            $start = microtime(true);
+            $query = $this->POST('query');
+            $this->load->model('turbo_bm_m');
+            $this->load->model('explicit_m');
+            $this->load->model('tacit_m');
+
+            $this->data['result'] = [];
+            $kategori = $this->POST('kategori');
+
+            if ($kategori == 0)
+            {
+                $this->data['tacit_knowledge'] = $this->tacit_m->get_tacit(['status' => 1]);
+                foreach ($this->data['tacit_knowledge'] as $tacit_knowledge)
+                {
+                    $text = strip_tags($tacit_knowledge->masalah);
+                    $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                    if ($idx != -1)
+                    {
+                        $tacit_knowledge->masalah = $text;
+                        $this->data['result'] []= [
+                            'index'     => $idx,
+                            'knowledge' => $tacit_knowledge
+                        ];
+                    }
+                    else
+                    {
+                        $text = strip_tags($tacit_knowledge->solusi);
+                        $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                        if ($idx != -1)
+                        {
+                            $tacit_knowledge->masalah = $text;
+                            $this->data['result'] []= [
+                                'index'     => $idx,
+                                'knowledge' => $tacit_knowledge
+                            ];
+                        }
+                    }
+                }
+            }
+            else if ($kategori == 1)
+            {
+                $docsPath = FCPATH . '/assets/dokumen/';
+                $this->data['explicit_knowledge'] = $this->explicit_m->get_explicit(['status' => 1]);
+                foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
+                {
+                    if (file_exists($docsPath . $explicit_knowledge->dokumen))
+                    {
+                        $parser = new \Smalot\PdfParser\Parser();
+                        $pdf = $parser->parseFile($docsPath . $explicit_knowledge->dokumen);
+                        $text = $pdf->getText();
+                        $idx = $this->turbo_bm_m->search(strtolower($text), strtolower($query));
+                        if ($idx != -1)
+                        {
+                            $explicit_knowledge->keterangan = $text;
+                            $this->data['result'] []= [
+                                'index'     => $idx,
+                                'knowledge' => $explicit_knowledge
+                            ];
+                        }
+                    }
+                }    
+            }
+            
+            $time_elapsed = microtime(true) - $start;
+            $this->data['response'] = [
+                'result'    => $this->data['result'],
+                'num_rows'  => count($this->data['result']),
+                'elapsed'   => $time_elapsed
+            ];
+            echo json_encode($this->data['response']);
+            exit;
+        }
+
+        $this->data['title']        = 'Hasil Pencarian';
+        $this->data['content']      = 'admin/hasil_pencarian';
+        $this->template($this->data, 'admin');
+    }
+
+    public function detail_data_tacit()
+    {
+        $this->data['id_tacit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('admin/daftar-pengetahuan-tacit');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->load->model('tacit_m');
+        $this->data['tacit']        = $this->tacit_m->get_row(['id_tacit' => $this->data['id_tacit']]);
+        if (!isset($this->data['id_tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan tacit tidak ditemukan', 'danger');
+            redirect('admin/daftar-pengetahuan-tacit');
+            exit;
+        }
+
+        $this->load->model('komentar_m');
+
+        if ($this->POST('submit'))
+        {
+            $this->data['komentar'] = [
+                'id_tacit'      => $this->data['id_tacit'],
+                'id_explicit'   => 0,
+                'nip'           => $this->data['nip'],
+                'komentar'      => $this->POST('komentar')
+            ];
+            $this->komentar_m->insert($this->data['komentar']);
+            $this->flashmsg('<i class="lnr lnr-success"></i> Komentar berhasil dimasukkan');
+            redirect('admin/detail-data-tacit/' . $this->data['id_tacit']);
+            exit;
+        }
+
+        $this->data['komentar']     = $this->komentar_m->get_by_order('waktu', 'ASC', ['id_tacit' => $this->data['id_tacit']]);
+        $this->data['title']        = 'Detail Data Pengetahuan Tacit';
+        $this->data['content']      = 'admin/detail_data_tacit';
+        $this->template($this->data, 'admin');
+    }
+
+    public function detail_data_explicit()
+    {
+        $this->data['id_explicit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('admin/daftar-pengetahuan-explicit');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->load->model('explicit_m');
+        $this->data['explicit']     = $this->explicit_m->get_row(['id_explicit' => $this->data['id_explicit']]);
+        if (!isset($this->data['explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan eksplisit tidak ditemukan', 'danger');
+            redirect('admin/daftar-pengetahuan-explicit');
+            exit;
+        }
+
+        $this->load->model('komentar_m');
+
+        if ($this->POST('submit'))
+        {
+            $this->data['komentar'] = [
+                'id_explicit'   => $this->data['id_explicit'],
+                'id_tacit'      => 0,
+                'nip'           => $this->data['nip'],
+                'komentar'      => $this->POST('komentar')
+            ];
+            $this->komentar_m->insert($this->data['komentar']);
+            $this->flashmsg('<i class="lnr lnr-success"></i> Komentar berhasil dimasukkan');
+            redirect('admin/detail-data-explicit/' . $this->data['id_explicit']);
+            exit;
+        }
+
+        $this->data['komentar']     = $this->komentar_m->get_by_order('waktu', 'ASC', ['id_explicit' => $this->data['id_explicit']]);
+        $this->data['title']        = 'Detail Data Pengetahuan Explicit';
+        $this->data['content']      = 'admin/detail_data_explicit';
+        $this->template($this->data, 'admin');
     }
 }

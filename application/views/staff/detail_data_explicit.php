@@ -11,7 +11,13 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                    
+                    <div class="row">
+                        <div class="col-md-offset-9 col-md-3">
+                            <a class="btn btn-primary" href="<?= base_url('staff/edit-data-explicit/' . $explicit->id_explicit) ?>"><i class="lnr lnr-pencil"></i> Edit</a>
+                            <a class="btn btn-danger" href="" onclick="delete_explicit(<?= $explicit->id_explicit ?>)"><i class="lnr lnr-trash"></i> Hapus</a>
+                        </div>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
@@ -121,4 +127,23 @@
                         responsive: true
                     })
                 });
+
+                function delete_explicit(id_explicit) {
+                    $.ajax({
+                        url: '<?= base_url('staff/daftar-pengetahuan-explicit') ?>',
+                        type: 'POST',
+                        data: {
+                            delete: true,
+                            id_explicit: id_explicit
+                        },
+                        success: function(response) {
+                            var json = $.parseJSON(response);
+                            window.location = '<?= base_url('staff/daftar-pengetahuan-explicit') ?>';
+                        },
+                        error: function(e) {
+                            console.log(e.responseText);
+                        }
+                    });
+                    return false;
+                }
             </script>

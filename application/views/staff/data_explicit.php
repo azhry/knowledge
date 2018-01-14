@@ -45,7 +45,7 @@
                                                 <td><?= $row->waktu ?></td>
                                                 <td><?= $row->status ? 'Valid' : 'Belum Valid' ?></td>
                                                 <td>
-                                                    <div class="btn-group">
+                                                    <!-- <div class="btn-group">
                                                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                         Aksi <span class="caret"></span></button>
                                                         <ul class="dropdown-menu" role="menu">
@@ -57,7 +57,7 @@
                                                             <li><a href="" onclick="delete_explicit(<?= $row->id_explicit ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                             <?php endif; ?>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                 </td>
                                             </tr>
                                             <?php $i++; endforeach; ?>

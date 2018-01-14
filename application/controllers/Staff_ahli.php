@@ -466,7 +466,7 @@ class Staff_ahli extends MY_Controller
                 'alamat'    => $this->POST('alamat')
             ];
 
-            // $this->upload($this->POST('nip'), 'userfile', 'doc');
+            $this->upload_img($this->POST('nip'), 'img/user', 'foto');
 
             $this->user_m->insert($this->data['data_user']);
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil disimpan');
@@ -523,6 +523,7 @@ class Staff_ahli extends MY_Controller
                 $this->data['data_user']['password'] = md5($password);
             }
 
+            $this->upload_img($this->POST('nip'), 'img/user', 'foto');
             $this->user_m->update($this->data['nip'], $this->data['data_user']);
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Data User berhasil diedit');
             redirect('staff_ahli/edit-data-user/' . $this->data['nip']);
@@ -558,7 +559,7 @@ class Staff_ahli extends MY_Controller
 
             if ($kategori == 0)
             {
-                $this->data['tacit_knowledge'] = $this->tacit_m->get_tacit();
+                $this->data['tacit_knowledge'] = $this->tacit_m->get_tacit(['status' => 1]);
                 foreach ($this->data['tacit_knowledge'] as $tacit_knowledge)
                 {
                     $text = strip_tags($tacit_knowledge->masalah);
@@ -589,7 +590,7 @@ class Staff_ahli extends MY_Controller
             else if ($kategori == 1)
             {
                 $docsPath = FCPATH . '/assets/dokumen/';
-                $this->data['explicit_knowledge'] = $this->explicit_m->get_explicit();
+                $this->data['explicit_knowledge'] = $this->explicit_m->get_explicit(['status' => 1]);
                 foreach ($this->data['explicit_knowledge'] as $explicit_knowledge)
                 {
                     if (file_exists($docsPath . $explicit_knowledge->dokumen))

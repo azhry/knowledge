@@ -61,6 +61,10 @@
                                 <label>Alamat<span class="required">*</span></label>
                                 <textarea class="form-control" name="alamat" required></textarea>
                             </div>
+                            <div class="form-group">
+                                <label for="foto">Foto<span class="required">*</span></label>
+                                <input type="file" name="foto" accept="image/*" class="form-control">
+                            </div>
 
                             <div>
                                 <input type="submit" name="simpan" value="Simpan" class="btn btn-success">

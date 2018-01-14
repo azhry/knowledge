@@ -48,7 +48,7 @@
                                                         <ul class="dropdown-menu" role="menu">
                                                           <li><a href="<?= base_url('kebagan/edit-data-user/'.$row->nip) ?>"><i class="lnr lnr-pencil"></i> Edit</a></li>
                                                           <li><a href="<?= base_url('kebagan/detail-data-user/'.$row->nip) ?>"><i class="fa fa-eye"></i> Detail</a></li>
-                                                          <li><a href="" onclick="delete_user(<?= $row->nip ?>)"><i class="lnr lnr-trash"></i> Hapus </a></li>
+                                                          <li><a href="" onclick="delete_user('<?= $row->nip ?>')"><i class="lnr lnr-trash"></i> Hapus </a></li>
                                                         </ul>
                                                     </div>
                                                 </td>

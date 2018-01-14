@@ -1,31 +1,33 @@
-<script src="<?= base_url('assets/scripts/chartist.min.js') ?>"></script>
+<script src="<?= base_url('assets/scripts/chart.min.js') ?>"></script>
 <div class="main">
 	<div class="main-content">
 		<div class="container-fluid">
 			<h1 class="text-center">Grafik Jumlah Pengetahuan</h1>
-			<div class="ct-chart ct-perfect-fourth" style="height: 400px;"></div>
+			<canvas id="chart-area"></canvas>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-		var chart = new Chartist.Bar('.ct-chart', {
-		  labels: ['Tacit Knowledge', 'Explicit Knowledge'],
-		  series: [
-		    [<?= count($tacit) ?>, <?= count($explicit) ?>],
-		    [<?= count($tacit_validasi) ?>, <?= count($explicit_validasi) ?>],
-		  ]
-		}, {
-		  stackBars: true,
-		  axisY: {
-		  	onlyInteger: true
-		  }
-		}).on('draw', function(data) {
-		  if(data.type === 'bar') {
-		    data.element.attr({
-		      style: 'stroke-width: 30px'
-		    });
-		  }
-		});
-
+	var ctx = document.getElementById("chart-area").getContext("2d");
+	var myPieChart = new Chart(ctx,{
+	    type: 'pie',
+	    data: {
+	    	datasets: [{
+	    		data: [
+	    			<?= count($tacit) + count($tacit_validasi) ?>,
+	    			<?= count($explicit) + count($explicit_validasi) ?>
+	    		],
+	    		backgroundColor: [
+	    			'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)'
+	    		],
+	    		label: 'Jumlah Pengetahuan'
+	    	}],
+	    	labels: ['Tacit', 'Explicit']
+	    },
+	    options: {
+	    	responsive: true
+	    }
+	});
 </script>
