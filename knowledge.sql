@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 11, 2018 at 08:03 PM
+-- Generation Time: Jan 14, 2018 at 07:26 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -44,7 +44,7 @@ CREATE TABLE `explicit` (
 --
 
 INSERT INTO `explicit` (`id_explicit`, `judul`, `kategori`, `keterangan`, `dokumen`, `status`, `nip`, `waktu`) VALUES
-(2, 'Test', 'test', '<p>test</p>', '20180112002516.pdf', 0, '12345', '2018-01-12 00:25:17');
+(2, 'Test', 'test', '<p>test</p>', '20180112002516.pdf', 1, '12345', '2018-01-12 00:25:17');
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,9 @@ INSERT INTO `komentar` (`id_komentar`, `id_tacit`, `id_explicit`, `nip`, `waktu`
 (4, 0, 1, '09021181520021', '2018-01-11 23:24:18', 'tes'),
 (5, 2, 0, '09021181520021', '2018-01-11 23:27:12', 'hihi'),
 (6, 2, 0, '123', '2018-01-12 01:37:33', 'wess'),
-(7, 0, 2, '123', '2018-01-12 01:40:43', 'tes');
+(7, 0, 2, '123', '2018-01-12 01:40:43', 'tes'),
+(8, 2, 0, '09021181419007', '2018-01-14 23:50:41', 'saya admin'),
+(10, 2, 0, '09021181419007', '2018-01-15 00:17:02', 'test key');
 
 -- --------------------------------------------------------
 
@@ -97,7 +99,7 @@ CREATE TABLE `tacit` (
 
 INSERT INTO `tacit` (`id_tacit`, `nip`, `judul`, `kategori`, `masalah`, `solusi`, `waktu`, `status`) VALUES
 (1, '12345', 'Judul 13', 'Kategori Tacit 13', '<p>Masalah Tacit 13</p>', '<p>Solusi Tacit 13</p>', '2017-11-27 18:03:50', 0),
-(2, '12345', 'Tacit', 'cit', '<p>cit</p>', '<p>cit</p>', '2018-01-11 22:32:56', 0);
+(2, '12345', 'Tacit', 'cit', '<p>cit</p>', '<p>cit</p>', '2018-01-11 22:32:56', 1);
 
 -- --------------------------------------------------------
 
@@ -124,7 +126,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`nip`, `password`, `nama`, `jabatan`, `bagian`, `email`, `no_hp`, `userfile`, `alamat`) VALUES
 ('09021181419007', '985fabf8f96dc1c4c306341031569937', 'Azhary Arliansyah', 'Admin', 'Keuangan', 'arliansyah_azhary@yahoo.com', '08080808', 'aaabbbccc', 'GG LMPGsdfsd'),
 ('09021181520021', '985fabf8f96dc1c4c306341031569937', 'Aaaaaazzz', 'Kebagan', 'Kepalaaa', 'arliansyah_azhary@yahoo.coms', '32453', '', 'asd567iyasdasdas'),
-('123', '985fabf8f96dc1c4c306341031569937', 'Azh', 'Staff Ahli', 'Hehe', 'arliansyah_azhary@yahoo.com', '081234265011', '', 'Komplek Bougenville KM. 7 Palembang'),
+('123', '985fabf8f96dc1c4c306341031569937', 'Azh', 'Staff Ahli', 'AABB', 'arliansyah_azhary@yahoo.com', '081234265011', '', 'Komplek Bougenville KM. 7 Palembang'),
 ('12345', 'a4f95a239896cd1fada61069976b9dda', 'AABBCC', 'Staff', 'AABBDD', 'arliansyah_azhary@yahoo.commm', 'trhfh43', '', 'AdABB');
 
 --
@@ -174,13 +176,37 @@ ALTER TABLE `explicit`
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tacit`
 --
 ALTER TABLE `tacit`
   MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `explicit`
+--
+ALTER TABLE `explicit`
+  ADD CONSTRAINT `explicit_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `user` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `komentar`
+--
+ALTER TABLE `komentar`
+  ADD CONSTRAINT `komentar_ibfk_1` FOREIGN KEY (`id_tacit`) REFERENCES `tacit` (`id_tacit`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `komentar_ibfk_2` FOREIGN KEY (`id_explicit`) REFERENCES `explicit` (`id_explicit`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `komentar_ibfk_3` FOREIGN KEY (`nip`) REFERENCES `user` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tacit`
+--
+ALTER TABLE `tacit`
+  ADD CONSTRAINT `tacit_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `user` (`nip`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
