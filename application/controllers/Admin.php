@@ -318,4 +318,130 @@ class Admin extends MY_Controller
         $this->data['content']      = 'admin/detail_data_explicit';
         $this->template($this->data, 'admin');
     }
+
+    public function daftar_pengetahuan_tacit()
+    {
+        $this->load->model('tacit_m');
+        if ($this->POST('id_tacit') && $this->POST('delete'))
+        {
+            $this->tacit_m->delete($this->POST('id_tacit'));
+            exit;
+        }
+
+        $this->data['tacit']        = $this->tacit_m->get_tacit();
+        $this->data['title']        = 'Daftar Pengetahuan Tacit';
+        $this->data['content']      = 'admin/daftar_pengetahuan_tacit';
+        $this->template($this->data, 'admin');
+    }
+
+    public function edit_data_tacit()
+    {   
+        $this->data['id_tacit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('admin/daftar-pengetahuan-tacit');
+            exit;
+        }
+
+        $this->load->model('tacit_m');
+        $this->data['tacit']        = $this->tacit_m->get_row(['id_tacit' => $this->data['id_tacit']]);
+        if (!isset($this->data['tacit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan tacit tidak ditemukan', 'danger');
+            redirect('admin/daftar-pengetahuan-tacit');
+            exit;
+        }
+
+        // if ($this->data['tacit']->nip != $this->data['nip'])
+        // {
+        //     $this->flashmsg('<i class="lnr lnr-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+        //     redirect('admin/daftar-pengetahuan-tacit');
+        //     exit;   
+        // }
+
+        if($this->POST('simpan'))
+        {
+            $this->data['data_tacit'] = [
+                'judul'         => $this->POST('judul'),
+                'kategori'      => $this->POST('kategori'),
+                'masalah'       => $this->POST('masalah'),
+                'solusi'        => $this->POST('solusi'),
+            ];
+
+            $this->tacit_m->update($this->data['id_tacit'], $this->data['data_tacit']);
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan tacit berhasil diedit');
+            redirect('admin/edit-data-tacit/' . $this->data['id_tacit']);
+            exit;
+        }
+
+        $this->data['title']        = 'Edit Data Pengetahuan Tacit';
+        $this->data['content']      = 'admin/edit_data_tacit';
+        $this->template($this->data, 'admin');
+    }
+
+    public function daftar_pengetahuan_explicit()
+    {
+        $this->load->model('explicit_m');
+        if ($this->POST('delete') && $this->POST('id_explicit'))
+        {
+            $this->explicit_m->delete($this->POST('id_explicit'));
+            exit;
+        }
+
+        $this->data['data']        = $this->explicit_m->get_explicit();
+        $this->data['title']        = 'Data Pengetahuan Explicit';
+        $this->data['content']      = 'admin/daftar_pengetahuan_explicit';
+        $this->template($this->data, 'admin');
+    }
+
+    public function edit_data_explicit()
+    {   
+        $this->data['id_explicit'] = $this->uri->segment(3);
+        if (!isset($this->data['id_explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Required parameter is missing', 'danger');
+            redirect('admin/daftar-pengetahuan-explicit');
+            exit;
+        }
+
+        $this->load->model('explicit_m');
+        $this->data['explicit']     = $this->explicit_m->get_row(['id_explicit' => $this->data['id_explicit']]);
+        if (!isset($this->data['explicit']))
+        {
+            $this->flashmsg('<i class="lnr lnr-warning"></i> Data pengetahuan eksplisit tidak ditemukan', 'danger');
+            redirect('admin/daftar-pengetahuan-explicit');
+            exit;
+        }
+
+        // if ($this->data['explicit']->nip != $this->data['nip'])
+        // {
+        //     $this->flashmsg('<i class="lnr lnr-warning"></i> Anda tidak diizinkan untuk mengubah data pengguna lain', 'danger');
+        //     redirect('admin/daftar-pengetahuan-explicit');
+        //     exit;   
+        // }
+
+        if($this->POST('simpan'))
+        {
+            $this->data['data_explicit'] = [
+                'nip'           => $this->data['nip'],
+                'judul'         => $this->POST('judul'),
+                'kategori'      => $this->POST('kategori'),
+                'keterangan'    => $this->POST('keterangan'),                
+                'waktu'         => date('Y-m-d H:i:s')
+            ];
+
+            $filename = explode('.', $this->data['explicit']->dokumen);
+            $this->upload($filename[0], 'dokumen', 'doc');
+
+            $this->explicit_m->update($this->data['id_explicit'], $this->data['data_explicit']);
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan explicit berhasil diedit');
+            redirect('admin/edit-data-explicit/' . $this->data['id_explicit']);
+            exit;
+        }
+
+        $this->data['title']        = 'Edit Data Pengetahuan Explicit';
+        $this->data['content']      = 'admin/edit_data_explicit';
+        $this->template($this->data, 'admin');
+    }
 }

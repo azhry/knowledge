@@ -15,37 +15,23 @@
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>
+                                <style type="text/css">.required{color: red;}</style>
                                 <?= $this->session->flashdata('msg') ?>
                             </div>
                             <div class="form-group">
-                                <label>NIP</label>
-                                <input type="text" class="form-control" name="nip" value="<?= $tacit->nip  ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Judul</label>
+                                <label>Judul<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="judul" value="<?= $tacit->judul  ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Kategori</label>
+                                <label>Kategori<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="kategori" value="<?= $tacit->kategori  ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Waktu</label>
-                                <div class="input-group date">
-                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" name="waktu" id="waktu" class="form-control" placeholder="YYYY-MM-DD" value="<?= $tacit->waktu  ?>" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <input type="text" class="form-control" name="status" value="<?= $tacit->status  ?>" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Masalah</label>
+                                <label>Masalah<span class="required">*</span></label>
                                 <textarea id="tinymce" class="form-control" name="masalah" required><?= $tacit->masalah  ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Solusi</label>
+                                <label>Solusi<span class="required">*</span></label>
                                 <textarea id="tinymce" class="form-control" name="solusi" required><?= $tacit->solusi  ?></textarea>
                             </div>
 
@@ -84,8 +70,6 @@
                         image_advtab: true
                     })
 
-                    $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
-                    
                     $('#dataTables-example').DataTable({
                         responsive: true
                     })

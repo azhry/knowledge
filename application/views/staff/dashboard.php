@@ -12,23 +12,23 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/daftar-pengetahuan-tacit') ?>">
+                                    <a href="<?= base_url('staff/tambah-data-tacit') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
                                                 <span class="number"><?= count($tacit) ?></span>
-                                                <span class="title">Tacit Knowledge</span>
+                                                <span class="title">Input Tacit Knowledge</span>
                                             </p>
                                         </div>
                                     </a>
                                 </div>
                                 <div class="col-md-3">
-                                    <a href="<?= base_url('staff/daftar-pengetahuan-explicit') ?>">
+                                    <a href="<?= base_url('staff/tambah-data-explicit') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-book"></i></span>
                                             <p>
                                                 <span class="number"><?= count($explicit) ?></span>
-                                                <span class="title">Explicit Knowledge</span>
+                                                <span class="title">Input Explicit Knowledge</span>
                                             </p>
                                         </div>
                                     </a>

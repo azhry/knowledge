@@ -11,15 +11,12 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <!-- /.row -->
-                <?= form_open('admin/edit_data_explicit/'.$explicit->id_explicit, ['id' => 'form']) ?>
+                <?= form_open_multipart('admin/edit-data-explicit/' . $explicit->id_explicit, ['id' => 'form']) ?>
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
                             <div>
+                                <style type="text/css">.required{color: red;}</style>
                                 <?= $this->session->flashdata('msg') ?>
-                            </div>
-                            <div class="form-group">
-                                <label>NIP</label>
-                                <input type="text" class="form-control" name="nip" value="<?= $explicit->nip  ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Judul</label>
@@ -30,23 +27,13 @@
                                 <input type="text" class="form-control" name="kategori" value="<?= $explicit->kategori  ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Waktu</label>
-                                <div class="input-group date">
-                                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                      <input type="text" name="waktu" id="waktu" class="form-control" placeholder="YYYY-MM-DD" value="<?= $explicit->waktu  ?>" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Status</label>
-                                <input type="text" class="form-control" name="status" value="<?= $explicit->status  ?>" required>
-                            </div>
-                            <div class="form-group">
                                 <label>Dokumen</label>
-                                <input type="file" name="doc">
+                                <input type="file" name="doc" accept="application/pdf">
+                                <small><i>Tidak perlu mengunggah file jika tidak ingin diubah</i></small>
                             </div>
                             <div class="form-group">
-                                <label>Kategori</label>
-                                <textarea id="tinymce" class="form-control" name="kategori" required><?= $explicit->kategori  ?></textarea>
+                                <label>Keterangan</label>
+                                <textarea id="tinymce" class="form-control" name="keterangan" required><?= $explicit->keterangan  ?></textarea>
                             </div>
 
                             <div>
@@ -84,10 +71,5 @@
                         image_advtab: true
                     })
 
-                    $('.input-group.date').datepicker({format: "yyyy-mm-dd"});
-                    
-                    $('#dataTables-example').DataTable({
-                        responsive: true
-                    })
                 });
             </script>

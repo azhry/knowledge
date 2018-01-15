@@ -115,7 +115,7 @@ class Staff extends MY_Controller
 
             $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan tacit berhasil disimpan');
 
-            redirect('staff/daftar-pengetahuan-tacit');
+            redirect('staff/tambah-data-tacit');
             exit;
         }
 
@@ -211,7 +211,7 @@ class Staff extends MY_Controller
                 $this->flashmsg('<i class="glyphicon glyphicon-warning"></i> Dokumen gagal diupload', 'danger');
             }
 
-            redirect('staff/daftar-pengetahuan-explicit');
+            redirect('staff/tambah-data-explicit');
             exit;
         }
 
