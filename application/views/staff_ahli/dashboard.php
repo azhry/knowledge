@@ -1,4 +1,4 @@
-<!-- MAIN -->
+MAIN -->
         <div class="main">
             <!-- MAIN CONTENT -->
             <div class="main-content">
@@ -33,7 +33,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <a href="<?= base_url('staff_ahli/data-komentar') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="lnr lnr-pencil"></i></span>
@@ -43,7 +43,7 @@
                                             </p>
                                         </div>
                                     </a>
-                                </div>
+                                </div> -->
                                 <div class="col-md-3">
                                     <a href="<?= base_url('staff_ahli/data-user') ?>">
                                         <div class="metric">
@@ -78,4 +78,4 @@
             </div>
             <!-- END MAIN CONTENT -->
         </div>
-        <!-- END MAIN -->
+        <!-- END MAIN
