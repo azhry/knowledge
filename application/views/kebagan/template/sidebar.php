@@ -4,7 +4,9 @@
                 <nav>
                     <ul class="nav">
                         <li><a href="<?= base_url('kebagan/') ?>" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
-                        <li><a href="<?= base_url('kebagan/data-user') ?>" class=""><i class="lnr lnr-user"></i> <span>Data User</span></a></li></li>
+                        <!-- <li><a href="<?= base_url('kebagan/data-user') ?>" class=""><i class="lnr lnr-user"></i> <span>Data User</span></a></li></li> -->
+                        <li><a href="<?= base_url('kebagan/tambah-data-tacit') ?>" class=""><i class="fa fa-book"></i> <span>Input Tacit Knowledge</span></a></li></li>
+                        <li><a href="<?= base_url('kebagan/tambah-data-explicit') ?>" class=""><i class="fa fa-book"></i> <span>Input Explicit Knowledge</span></a></li></li>
                         <li><a href="<?= base_url('kebagan/pencarian') ?>" class=""><i class="fa fa-search"></i> <span>Searching</span></a></li></li>
                         <li><a href="<?= base_url('kebagan/knowledge-base') ?>"><i class="fa fa-lightbulb-o"></i> Knowledge Base</a></li>
                         <li><a href="<?= base_url('kebagan/grafik-pengetahuan') ?>"><i class="fa fa-bar-chart"></i> Grafik Pengetahuan</a></li>

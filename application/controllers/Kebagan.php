@@ -413,4 +413,66 @@ class Kebagan extends MY_Controller
         $this->template($this->data, 'kebagan');
     }
 
+    public function tambah_data_tacit()
+    {
+        if($this->POST('simpan')){
+
+            $this->data['data_tacit'] = [
+                'nip'       => $this->data['nip'],
+                'judul'     => $this->POST('judul'),
+                'kategori'  => $this->POST('kategori'),
+                'masalah'   => $this->POST('masalah'),
+                'solusi'    => $this->POST('solusi'),
+                'waktu'     => date('Y-m-d H:i:s')
+            ];
+
+            $this->load->model('tacit_m');
+            $this->tacit_m->insert($this->data['data_tacit']);
+
+            $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan tacit berhasil disimpan');
+
+            redirect('kebagan/tambah-data-tacit');
+            exit;
+        }
+
+
+        $this->data['title']        = 'Tambah Data Pengetahuan Tacit';
+        $this->data['content']      = 'kebagan/tambah_data_tacit';
+        $this->template($this->data, 'kebagan');
+    }
+
+    public function tambah_data_explicit()
+    {
+        if($this->POST('simpan'))
+        {
+            $filename = date('YmdHis');
+            if ($this->upload($filename, 'dokumen', 'doc'))
+            {
+                $this->data['data_explicit'] = [
+                    'nip'           => $this->data['nip'],
+                    'judul'         => $this->POST('judul'),
+                    'kategori'      => $this->POST('kategori'),
+                    'keterangan'    => $this->POST('keterangan'),                
+                    'waktu'         => date('Y-m-d H:i:s'),
+                    'dokumen'       => $filename . '.pdf'
+                ];
+
+                $this->load->model('explicit_m');
+                $this->explicit_m->insert($this->data['data_explicit']);
+                $this->flashmsg('<i class="glyphicon glyphicon-success"></i> Pengetahuan explicit berhasil disimpan');
+            }
+            else
+            {
+                $this->flashmsg('<i class="glyphicon glyphicon-warning"></i> Dokumen gagal diupload', 'danger');
+            }
+
+            redirect('kebagan/tambah-data-explicit');
+            exit;
+        }
+
+        $this->data['title']        = 'Tambah Data Pengetahuan Explicit';
+        $this->data['content']      = 'kebagan/tambah_data_explicit';
+        $this->template($this->data, 'kebagan');
+    }
+
 }

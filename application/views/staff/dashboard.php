@@ -44,7 +44,7 @@ MAIN -->
                                         </div>
                                     </a>
                                 </div> -->
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <a href="<?= base_url('staff/data-user') ?>">
                                         <div class="metric">
                                             <span class="icon"><i class="fa fa-user fa-fw"></i></span>
@@ -54,7 +54,7 @@ MAIN -->
                                             </p>
                                         </div>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="row">
