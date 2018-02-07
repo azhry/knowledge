@@ -22,7 +22,7 @@
     <script src="<?= base_url('assets/datepicker') ?>/js/bootstrap-datepicker.min.js"></script>
 
     
-    <script>
+    <!-- <script>
     $(function() {
         var data, options;
 
@@ -139,7 +139,7 @@
         }
 
     });
-    </script>
+    </script> -->
 </body>
 
 </html>

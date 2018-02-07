@@ -475,4 +475,33 @@ class Kebagan extends MY_Controller
         $this->template($this->data, 'kebagan');
     }
 
+    public function detail_profile()
+    {
+        $this->data['nip']  = $this->uri->segment(3);
+        if (!isset($this->data['nip']))
+        {
+            $this->flashmsg('Required parameter is missing', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+        if (!isset($this->data['user']))
+        {
+            $this->flashmsg('Data not found', 'danger');
+            redirect('kebagan/pencarian');
+            exit;
+        }
+
+        $this->load->model('tacit_m');
+        $this->load->model('explicit_m');
+
+        $this->data['tacit']    = $this->tacit_m->get(['nip' => $this->data['nip']]);
+        $this->data['explicit'] = $this->explicit_m->get(['nip' => $this->data['nip']]);
+        $this->data['title']    = 'Detail Profile';
+        $this->data['content']  = 'kebagan/detail_profile';
+        $this->template($this->data, 'kebagan');
+    }
+
 }

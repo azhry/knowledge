@@ -725,4 +725,33 @@ class Staff_ahli extends MY_Controller
         $this->data['content']  = 'staff_ahli/knowledge_base';
         $this->template($this->data, 'staff_ahli');
     }
+
+    public function detail_profile()
+    {
+        $this->data['nip']  = $this->uri->segment(3);
+        if (!isset($this->data['nip']))
+        {
+            $this->flashmsg('Required parameter is missing', 'danger');
+            redirect('staff-ahli/pencarian');
+            exit;
+        }
+
+        $this->load->model('user_m');
+        $this->data['user'] = $this->user_m->get_row(['nip' => $this->data['nip']]);
+        if (!isset($this->data['user']))
+        {
+            $this->flashmsg('Data not found', 'danger');
+            redirect('staff-ahli/pencarian');
+            exit;
+        }
+
+        $this->load->model('tacit_m');
+        $this->load->model('explicit_m');
+
+        $this->data['tacit']    = $this->tacit_m->get(['nip' => $this->data['nip']]);
+        $this->data['explicit'] = $this->explicit_m->get(['nip' => $this->data['nip']]);
+        $this->data['title']    = 'Detail Profile';
+        $this->data['content']  = 'staff_ahli/detail_profile';
+        $this->template($this->data, 'staff_ahli');
+    }
 }

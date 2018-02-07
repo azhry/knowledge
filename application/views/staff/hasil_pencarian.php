@@ -85,7 +85,7 @@
 						html += '<div class="row" style="margin-top: 1%;">' +
 							'<div class="col-md-8 hasil">' +
 								'<a href="<?= base_url('staff/detail-data-') ?>' + nama_kategori + '/' + (nama_kategori == 'tacit' ? json.result[i].knowledge.id_tacit : json.result[i].knowledge.id_explicit) + '"><h3><i class="fa fa-file-o"></i> ' + json.result[i].knowledge.judul + '</h3></a>' +
-								'<h5><i>Oleh ' + json.result[i].knowledge.nama + ' pada ' + json.result[i].knowledge.waktu + '</i></h5>' + 
+								'<h5><i>Oleh <a href="<?= base_url('staff/detail-profile') ?>/' + json.result[i].knowledge.nip +  '">' + json.result[i].knowledge.nama + '</a> pada ' + json.result[i].knowledge.waktu + '</i></h5>' + 
 								'<div class="keterangan" style="text-align: justify;">' + keterangan + '</div>' +
 							'</div>' +
 						'</div>';
