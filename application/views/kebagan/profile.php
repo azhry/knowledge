@@ -51,7 +51,7 @@
 									<label for="foto">Foto Profile <small><i>(Lengkapi form ini jika ingin mengubah foto profile dalam format jpg/jpeg)</i></small></label>
 									<input type="file" name="foto" class="form-control" accept="image/jpeg">
 								</div>
-								<<!-- div class="form-group">
+								<!-- div class="form-group">
 									<label for="password_lama">Password Lama <small><i>(Lengkapi form ini jika ingin mengubah password)</i></small></label>
 									<input type="password" name="password_lama" class="form-control">
 								</div>
