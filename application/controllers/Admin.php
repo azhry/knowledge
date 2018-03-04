@@ -473,4 +473,11 @@ class Admin extends MY_Controller
         $this->data['content']  = 'admin/detail_profile';
         $this->template($this->data, 'admin');
     }
+
+    public function pengujian()
+    {
+        $this->data['title']        = 'Pengujian';
+        $this->data['content']      = 'admin/pengujian';
+        $this->template($this->data);
+    }
 }

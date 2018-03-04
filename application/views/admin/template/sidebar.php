@@ -8,6 +8,7 @@
                         <li><a href="<?= base_url('admin/daftar-pengetahuan-explicit') ?>"><i class="fa fa-book"></i> Explicit Knowledge</a></li>
                         <li><a href="<?= base_url('admin/data-user') ?>" class=""><i class="lnr lnr-user"></i> <span>Data User</span></a></li>
                         <li><a href="<?= base_url('admin/pencarian') ?>" class=""><i class="fa fa-search"></i> <span>Searching</span></a></li>
+                        <li><a href="<?= base_url('admin/pengujian') ?>" class=""><i class="fa fa-pencil"></i> <span>Pengujian</span></a></li>
                     </ul>
                 </nav>
                 <br>
