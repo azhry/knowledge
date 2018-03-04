@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2018 at 06:43 AM
+-- Generation Time: Mar 04, 2018 at 04:08 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -79,6 +79,34 @@ INSERT INTO `komentar` (`id_komentar`, `id_tacit`, `id_explicit`, `nip`, `waktu`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pola_pengujian`
+--
+
+CREATE TABLE `pola_pengujian` (
+  `id_pola` int(11) NOT NULL,
+  `pola` varchar(150) NOT NULL,
+  `dokumen` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pola_pengujian`
+--
+
+INSERT INTO `pola_pengujian` (`id_pola`, `pola`, `dokumen`) VALUES
+(1, 'Perkebunan', '[\"Analisa_Daun.pdf\",\"Analisa_Daun_1.pdf\",\"Faktor_Hara.pdf\",\"Faktor_Hara_1.pdf\",\"Fungsi_Hara.pdf\",\"Hasil_Tanaman.pdf\", \"Jenis_Tipe.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Kelebihan_kekurangan_hara.pdf\",\"Kelebihan_kekurangan_hara_1.pdf\",\"Sampel_Tanah.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\",\"Tandan_Kosong.pdf\",\"Visi_Misi.pdf\",\"Visi_Misi_1.pdf\"]'),
+(2, 'Kelapa Sawit', '[\"Analisa_Daun.pdf\",\"Analisa_Daun_1.pdf\",\"Hasil_Tanaman.pdf\", \"Jenis_Tipe.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\",\"Tandan_Kosong.pdf\"]'),
+(3, 'Tanaman', '[\"Analisa_Daun.pdf\",\"Analisa_Daun_1.pdf\",\"Faktor_Hara.pdf\",\"Faktor_Hara_1.pdf\",\"Fungsi_Hara.pdf\",\"Hasil_Tanaman.pdf\", \"Jenis_Tipe.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Kelebihan_kekurangan_hara.pdf\",\"Kelebihan_kekurangan_hara_1.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\",\"Tandan_Kosong.pdf\"]'),
+(4, 'Rendah', '[\"Faktor_Hara.pdf\",\"Faktor_Hara_1.pdf\",\"Hasil_Tanaman.pdf\", \"Jenis_Tipe.pdf\",\"Sampel_Tanah.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\"]'),
+(5, 'Tinggi', '[\"Faktor_Hara.pdf\",\"Faktor_Hara_1.pdf\",\"Hasil_Tanaman.pdf\", \"Jenis_Tipe.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Sampel_Tanah.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\"]'),
+(6, 'Umur', '[\"Jenis_Tipe.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\"]'),
+(7, 'Tahun', '[\"Analisa_Daun.pdf\",\"Analisa_Daun_1.pdf\",\"Kepala_Sawit.pdf\",\"Kelapa_Sawit_1.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\"]'),
+(8, 'Misi', '[\"Visi_Misi.pdf\",\"Visi_Misi_1.pdf\"]'),
+(9, 'Nilai', '[\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\",\"Tandan_Kosong.pdf\"]'),
+(10, 'Analisis', '[\"Sampel_Tanah.pdf\",\"Tanaman_Berumur__11_Tahun.pdf\",\"Tanaman_Berumur_14_Tahun.pdf\",\"Tanaman_Berumur_17_Tahun.pdf\",\"Tanaman_Berumur_25_Tahun.pdf\",\"Tanaman_Berumur_27_Tahun.pdf\",\"Tanaman_Tahun_1989.pdf\"]');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tacit`
 --
 
@@ -99,7 +127,8 @@ CREATE TABLE `tacit` (
 
 INSERT INTO `tacit` (`id_tacit`, `nip`, `judul`, `kategori`, `masalah`, `solusi`, `waktu`, `status`) VALUES
 (1, '12345', 'Judul 13', 'Kategori Tacit 13', '<p>Masalah Tacit 13</p>', '<p>Solusi Tacit 13</p>', '2017-11-27 18:03:50', 0),
-(2, '12345', 'Tacit', 'cit', '<p>cit</p>', '<p>cit</p>', '2018-01-11 22:32:56', 1);
+(2, '12345', 'Tacit', 'cit', '<p>cit</p>', '<p>cit</p>', '2018-01-11 22:32:56', 1),
+(3, '09021181520021', 'tacit kebagan', 'kategori kebagan', '<p>maaslah kebagan</p>', '<p>solusi kebagan</p>', '2018-02-03 20:39:10', 0);
 
 -- --------------------------------------------------------
 
@@ -150,6 +179,12 @@ ALTER TABLE `komentar`
   ADD KEY `nip` (`nip`);
 
 --
+-- Indexes for table `pola_pengujian`
+--
+ALTER TABLE `pola_pengujian`
+  ADD PRIMARY KEY (`id_pola`);
+
+--
 -- Indexes for table `tacit`
 --
 ALTER TABLE `tacit`
@@ -179,10 +214,16 @@ ALTER TABLE `komentar`
   MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `pola_pengujian`
+--
+ALTER TABLE `pola_pengujian`
+  MODIFY `id_pola` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `tacit`
 --
 ALTER TABLE `tacit`
-  MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_tacit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

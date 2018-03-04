@@ -476,6 +476,11 @@ class Admin extends MY_Controller
 
     public function pengujian()
     {
+        $this->load->model( 'pola_pengujian_m' );
+        $this->load->model( 'turbo_bm_m' );
+        $this->data['path']         = FCPATH . '/assets/test_document/';
+        $this->data['parser']       = new \Smalot\PdfParser\Parser();
+        $this->data['pola']         = $this->pola_pengujian_m->get();
         $this->data['title']        = 'Pengujian';
         $this->data['content']      = 'admin/pengujian';
         $this->template($this->data);

@@ -29,103 +29,38 @@
                                                 <th style="width: 20px !important;">No</th>
                                                 <th style="width: 120px !important;">Pattern</th>
                                                 <th>Total Number Of Relevant Items in Collection</th>
-                                                <th>Total Number Of Items Retrivied</th>
-                                                <th>Number Of Relevant Items Retrivied</th>
+                                                <th>Total Number Of Items Retrieved</th>
+                                                <th>Number Of Relevant Items Retrieved</th>
                                                 <th>Recall</th>
-                                                <th>Presicion</th>
+                                                <th>Precision</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $i = 0; foreach ( $pola as $row ): ?>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Kelapa Sawit</td>
-                                                <td>278</td>
-                                                <td>110</td>
+                                                <?php 
+                                                    $documents = json_decode($row->dokumen); 
+                                                    $retrieved_documents = 0;
+                                                    foreach ( $documents as $document ) {
+                                                        if ( file_exists( $path . $document ) ) {
+
+                                                            $pdf = $parser->parseFile( $path . $document );
+                                                            $text = $pdf->getText();
+                                                            $idx = $this->turbo_bm_m->search( strtolower( $text ), strtolower( $row->pola ) );
+                                                            if ( $idx != -1 ) $retrieved_documents++;
+
+                                                        }
+                                                    }
+                                                ?>
+                                                <td><?= ++$i ?></td>
+                                                <td><?= $row->pola ?></td>
+                                                <td><?= count($documents) ?></td>
+                                                <td><?= $retrieved_documents ?></td>
                                                 <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
+                                                <td><?= $retrieved_documents / count( array_diff( scandir( $path ), [ '.', '..' ] ) ) ?></td>
+                                                <td><?= $retrieved_documents / count( $documents ) ?></td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>pH</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Rendah</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>Tinggi</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>Umur</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>Tanah</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>Tanaman</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>Tahun</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>Analisis</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
-                                            <tr>
-                                                <td>10</td>
-                                                <td>Pupuk</td>
-                                                <td>278</td>
-                                                <td>110</td>
-                                                <td>11</td>
-                                                <td>12</td>
-                                                <td>11</td>
-                                            </tr>
+                                            <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
