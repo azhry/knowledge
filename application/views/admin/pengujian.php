@@ -36,6 +36,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $recall = []; $precision = []; ?>
                                             <?php $i = 0; foreach ( $pola as $row ): ?>
                                             <tr>
                                                 <?php 
@@ -56,12 +57,30 @@
                                                 <td><?= $row->pola ?></td>
                                                 <td><?= count($documents) ?></td>
                                                 <td><?= $retrieved_documents ?></td>
-                                                <td>11</td>
-                                                <td><?= $retrieved_documents / count( array_diff( scandir( $path ), [ '.', '..' ] ) ) ?></td>
-                                                <td><?= $retrieved_documents / count( $documents ) ?></td>
+                                                <td><?= $retrieved_documents ?></td>
+                                                <td>
+                                                    <?php  
+                                                        echo $retrieved_documents / count($documents);
+                                                        $recall []= $retrieved_documents / count($documents);
+                                                    ?>
+                                                    
+                                                </td>
+                                                <td>
+                                                    <?php 
+                                                        echo $retrieved_documents / $retrieved_documents;
+                                                        $precision []= $retrieved_documents / $retrieved_documents; 
+                                                    ?>
+                                                </td>
                                             </tr>
                                             <?php endforeach; ?>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="5">Rata-rata</td>
+                                                <td><?= array_sum( $recall ) / count( $recall ) ?></td>
+                                                <td><?= array_sum( $precision ) / count( $precision ) ?></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                                 <!-- /.panel-body -->
