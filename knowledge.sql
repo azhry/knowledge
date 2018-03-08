@@ -57,7 +57,7 @@ CREATE TABLE `komentar` (
   `id_tacit` int(11) NOT NULL,
   `id_explicit` int(11) NOT NULL,
   `nip` varchar(30) NOT NULL,
-  `waktu` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `waktu` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `komentar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
