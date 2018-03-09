@@ -46,6 +46,7 @@ class Staff_ahli extends MY_Controller
         if ($this->POST('id_tacit') && $this->POST('delete'))
         {
             $this->tacit_m->delete($this->POST('id_tacit'));
+            redirect( 'staff_ahli/knowledge_base' );
             exit;
         }
 

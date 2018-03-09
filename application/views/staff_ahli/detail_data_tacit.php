@@ -142,7 +142,8 @@
                             nip: '<?= $nip ?>'
                         },
                         success: function(response) {
-                            var json = $.parseJSON(response);
+                            // var json = $.parseJSON(response);
+                            window.location = '<?= base_url( 'staff_ahli/knowledge_base' ) ?>';
                         },
                         error: function(e) {
                             console.log(e.responseText);
